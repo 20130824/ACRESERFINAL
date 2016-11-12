@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+<h1>Fill in your name and your friend's name to create your custom greeting!</h1>
+<form action='/greeting_card'>
+    <div class="form-group">
+        <label for="sender">Your name</label>
+        <input id="sender" name="sender" class="form-control" type="text">
+    </div>
+    <div class="form-group">
+        <label for="recipient">Your friend's name</label>
+        <input id="recipient" name="recipient" class="form-control" type="text">
+    </div>
+    <button type="submit" class="btn">Go!</button>
+</form>
+<!--
+<div class="col-md-4 col-md-offset-4">
+    <h2>Registrar Participante</h2>
+    <h3>Datos Personales:</h3>
+    <form action="greeting">
+        <div class="form-group">
+            <label>Nombres:</label>
+            <input type="text" class="form-control" >
+        </div>
+
+        <div class="form-group">
+            <label>Apellidos:</label>
+            <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Fecha de Nacimiento:</label>
+            <input type="date" id="birthday" name="birthday" size="20" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Cedula:</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Sexo:</label>
+            <p>
+                <label>
+                    <input type="radio" name="Sexo" value="M" id="Sexo_0">
+                    Masculino</label>
+                <br>
+                <label>
+                    <input type="radio" name="Sexo" value="F" id="Sexo_1">
+                    Femenino</label>
+                <br>
+            </p>
+        </div>
+
+        <h3>Info de Contacto:</h3>
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Telefono Celular:</label>
+            <input type="text" id="UserMobile" maxlength="14" data-fv-numeric="true" data-fv-numeric-message="Please enter valid phone numbers" data-fv-phone-country11="IN" required="required" data-fv-notempty-message="This field cannot be left blank." placeholder="Mobile No. " class="form-control" name="data[User][mobile]" data-fv-field="data[User][mobile]">
+        </div>
+        <div class ="form-group">
+            <label>Telefono Residencial:</label>
+            <input type="tel" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="submit" id="btnSubmit" class="form-control">
+        </div>
+    </form>
+</div><!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+
+
+
+
+</body>
+</html>

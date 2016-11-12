@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+
+
+#botonAdm:hover {
+	background-color: #03a9f4;
+	color: white;
+}
+
+#botonReg{
+	margin-left:50px;
+	margin-top:20px;
+	font-size: 24px;
+	padding: 32px 36px;
+	border: 2px solid #f44336;
+	color: black;
+	transition-duration: 0.2s;
+}
+
+#botonReg:hover {
+	background-color: #f44336;
+	color: white;
+}
+
+#botonVol {
+	font-size: 24px;
+	padding: 32px 36px;
+	margin-left:50px;
+	margin-top:20px;
+	border: 2px solid #673ab7;
+	color: black;
+	transition-duration: 0.2s;
+}
+
+#botonVol:hover {
+	background-color: #673ab7;
+	color: white;
+}
+
+#btnSubmit:hover {
+	background-color: rgb(102,175,233);
+	color: white;
+	}
