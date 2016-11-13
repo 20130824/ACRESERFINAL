@@ -13,29 +13,35 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 import static spark.Spark.*;
 
 public class Controller {
 
-    public static  ICRUD <Participante> participanteModel;
-    public  static ICRUD <Entrenador> entrenadorModel;
+    public  static  ICRUD <Participante>    participanteModel;
+    public  static  ICRUD <Entrenador>      entrenadorModel;
+    public  static  ICRUD <Grupo>           grupoModel;
     public static void main(String[] args) {
         Spark.staticFileLocation("/templates");
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-            entrenadorModel = new EntrenadorModel<>(5432, "pierre0592", "Acreser", "postgres");
-           // ArrayList<Entrenador> entrenadores = entrenadorModel.getElements();
+            entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
+            grupoModel = new GrupoModel<>(5432, "1234", "Acreser", "postgres");
 
-           // System.out.println(entrenadorModel.readOne("h3j12k").getNombre());
+            //Grupo grupo = new Grupo(null, "Antorcha" , formatter.parse("2016-11-12") , formatter.parse("2016-12-14"), new Taller(null, null, "da-d-1"), "Antorcha-60", "h3j12k", 100, Float.parseFloat("2367.6"));
 
-
+            //Iterator<Grupo> iterator = grupoModel.getElements().iterator();
+           // while (iterator.hasNext()){
+            //    System.out.println(iterator.next().getNombre());
+           // }
+           System.out.println( grupoModel.readOne("fsdbn").getNombre());
 
             Participante par = new Participante("Pierre Dany", "Ridore Lamothe", formatter.parse("1992-05-14"), 'M', "jkdj22", "JNNJN-MMHGMB", "ridoreda1992@gmail.com", "8294480042", "8099714287");
-            participanteModel = new ParticipanteModel<>(5432, "pierre0592", "Acreser", "postgres");
+            participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
 
             ArrayList<Participante> participantes = participanteModel.getElements();
 
@@ -79,7 +85,7 @@ public class Controller {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = formatter.parse(fecha);
 
-                entrenadorModel= new EntrenadorModel<>(5432, "pierre0592", "Acreser", "postgres");
+                entrenadorModel= new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
 
                 System.out.println(date);
 
@@ -120,7 +126,7 @@ public class Controller {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = formatter.parse(fecha);
 
-                entrenadorModel = new EntrenadorModel<>(5432, "pierre0592", "Acreser", "postgres");
+                entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
                 entrenadorModel.insert(new Entrenador(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes));
 
             } catch (Exception ex){
