@@ -30,12 +30,26 @@
         document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n') 
     }
 </script>
+
+      <script>
+          $(function() {
+              $('#selectorTaller').change(function(){
+                  $('.fechas').hide();
+                  $('#' + $(this).val()).show();
+              });
+          });
+
+      </script>
  
 <script>
 if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
     jQuery(function($){ //on document.ready
         $('#fechaInicio').datepicker();
 		$('#fechaFin').datepicker();
+        $('#fecha0').datepicker();
+        $('#fecha1').datepicker();
+        $('#fecha2').datepicker();
+        $('#fecha3').datepicker();
     })
 }
 </script>
@@ -112,9 +126,38 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
  
  <div class="form-group">
  <label>Tipo:</label>
- <select name="tipo" class="form-control"></select>
+ <select id="selectorTaller" name="tipo" class="form-control">
+     <option value="1">Discovery</option>
+     <option value="1">Intensive</option>
+     <option value="3">LP</option>
+ </select>
  </div>
- 
+<div class="form-group">
+
+    <div id="1" class="fechas" style="display:none">
+        <h3>Fecha  de pago: </h3>
+        <div class="form-group">
+            <label>Fecha 1</label>
+        <input type="date" id="fecha0" name="fecha0" size="20" class="form-control" />
+            </div>
+    </div>
+    <div id="3" class="fechas" style="display:none">
+        <h3>Fechas de pago: </h3>
+        <div class="form-group">
+        <label>Fecha 1</label>
+        <input type="date" id="fecha1" name="fecha1" size="20" class="form-control" />
+            </div>
+        <div class="form-group">
+        <label>Fecha 2</label>
+        <input type="date" id="fecha2" name="fecha2" size="20" class="form-control" />
+            </div>
+        <div class="form-group">
+        <label>Fecha 3</label>
+        <input type="date" id="fecha3" name="fecha3" size="20" class="form-control" />
+            </div>
+    </div>
+</div>
+
  <div class="form-group">
  <label>Entrenador:</label>
  <select name="entrenador" class="form-control"></select>
@@ -138,6 +181,8 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
   <script src="js/jquery-1.11.2.min.js"></script>
+
+
 
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
   <script src="js/bootstrap.js"></script>
