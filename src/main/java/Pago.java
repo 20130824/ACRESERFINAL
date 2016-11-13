@@ -12,35 +12,26 @@ import java.util.Date;
  * @author isaac
  */
 public class Pago {
-    private Date FechaLimite;
-    private Date FechaPagado;
-    private Float MontoPagado;
-    private Enum TipoPago;
-    private Date FechaProximoPago;
-    private float Balance;
-    private String CodigoTaller;
-    private String CodigoParticpante;
-    private String Codigo;
 
-    public Pago(Date fechaLimite, Date fechaPagado, Float montoPagado, Enum tipoPago, Date fechaProximoPago, float balance, String codigoTaller, String codigoParticpante, String codigo) {
-        FechaLimite = fechaLimite;
+    private Date     FechaPagado;
+    private Float    MontoPagado;
+    private Enum     TipoPago;
+    private float    Balance;
+    private String   CodigoTaller;
+    private String   CodigoParticpante;
+    private String   Codigo;
+    private String   Grupo;
+
+    public Pago(Date fechaPagado, Float montoPagado, Enum tipoPago, String codigoParticpante, String codigo, String grupo) {
+
         FechaPagado = fechaPagado;
         MontoPagado = montoPagado;
         TipoPago = tipoPago;
-        FechaProximoPago = fechaProximoPago;
-        Balance = balance;
-        CodigoTaller = codigoTaller;
         CodigoParticpante = codigoParticpante;
         Codigo = codigo;
+        Grupo = grupo;
     }
 
-    public Date getFechaLimite() {
-        return FechaLimite;
-    }
-
-    public void setFechaLimite(Date fechaLimite) {
-        FechaLimite = fechaLimite;
-    }
 
     public Date getFechaPagado() {
         return FechaPagado;
@@ -64,14 +55,6 @@ public class Pago {
 
     public void setTipoPago(Enum tipoPago) {
         TipoPago = tipoPago;
-    }
-
-    public Date getFechaProximoPago() {
-        return FechaProximoPago;
-    }
-
-    public void setFechaProximoPago(Date fechaProximoPago) {
-        FechaProximoPago = fechaProximoPago;
     }
 
     public float getBalance() {
@@ -104,5 +87,14 @@ public class Pago {
 
     public void setCodigo(String codigo) {
         Codigo = codigo;
+    }
+
+
+    public String getGrupo() {
+        return Grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        Grupo = grupo;
     }
 }

@@ -8,17 +8,18 @@ import java.util.Date;
 public class Participante {
 
 
-        private String Nombre;
-        private String Apellidos;
-        private Date FechaNacimiento;
-        private char Sexo;
-        private String Matricula;
-        private String Cedula;
-        private String Email;
-        private String TelCel;
-        private String TelRes;
+        private String  Nombre;
+        private String  Apellidos;
+        private Date    FechaNacimiento;
+        private char    Sexo;
+        private String  Matricula;
+        private String  Cedula;
+        private String  Email;
+        private String  TelCel;
+        private String  TelRes;
+        private float   balance;
 
-        public Participante(String nombre, String apellidos, Date fechaNacimiento, char sexo, String matricula, String cedula, String email, String telCel, String telRes) {
+        public Participante(String nombre, String apellidos, Date fechaNacimiento, char sexo, String matricula, String cedula, String email, String telCel, String telRes , float balance) {
             this.Nombre = nombre;
             this.Apellidos = apellidos;
             this.FechaNacimiento = fechaNacimiento;
@@ -28,6 +29,7 @@ public class Participante {
             this.Email = email;
             this.TelCel = telCel;
             this.TelRes = telRes;
+            this.balance = balance;
         }
 
         public String getNombre() {
@@ -94,13 +96,20 @@ public class Participante {
             this.TelCel = TelCel;
         }
 
-        public String getTelRes() {
-            return TelRes;
+        public float getBalance() {
+            return balance;
         }
 
-        public void setTelRes(String TelRes) {
-            this.TelRes = TelRes;
+        public void setBalance(float balance) {
+            this.balance = balance;
         }
 
+    public String getTelRes() {
+        return TelCel;
+    }
+
+    public void setTelRes(String TelRes) {
+        this.TelRes = TelRes;
+    }
     }
 

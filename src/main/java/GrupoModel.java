@@ -29,7 +29,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
     @Override
     public Boolean insert(T entity) {
         String codigo =id.generateSessionKey(6);
-        String sql = "insert into grupos (fechainicio, fechafin, codigo, tipo, grupo, entrenador, precio,  cupo, nombre) Values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "insert into grupos (fechainicio, fechafin, codigo, tipo, grupo, entrenador, precio,  cupo, nombre, fechapago1, fechapago2, fechapago3) Values (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?);";
         String sql2 = "Select codigo from grupos where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
@@ -44,25 +44,26 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             psmt1.executeQuery();
             resultSet= psmt1.getResultSet();
 
-            psmt.setDate(1, new Date(entity.getFechaInicio().getTime()));
-            psmt.setDate(2, new Date(entity.getFechaFin().getTime()));
-
-
+            psmt.setDate    (1,  new Date(entity.getFechaInicio().getTime()));
+            psmt.setDate    (2,  new Date(entity.getFechaFin().getTime()));
             if(resultSet.next()) {
                 codigo = id.generateSessionKey(6);
+                psmt.setString(3, codigo);
             }else {
                 psmt.setString(3, codigo);
             }
-            psmt.setString(4, entity.getTipo().getCodigo());
-            psmt.setString(5, entity.getGrupo());
-            psmt.setString(6, entity.getCodigoEntrenador());
-            psmt.setFloat(7, entity.getPrecio());
-            psmt.setInt(8, entity.getCupo());
-            psmt.setString(9, entity.getNombre());
-
+            psmt.setString  (4,  entity.getTipo().getCodigo());
+            psmt.setString  (5,  entity.getGrupo());
+            psmt.setString  (6,  entity.getCodigoEntrenador());
+            psmt.setFloat   (7,  entity.getPrecio());
+            psmt.setInt     (8,  entity.getCupo());
+            psmt.setString  (9,  entity.getNombre());
+            psmt.setDate    (10, new Date( entity.getFechaDePago1().getTime()));
+            psmt.setDate    (11, new Date( entity.getFechaDePago2().getTime()));
+            psmt.setDate    (12, new Date( entity.getFechaDePago3().getTime()));
             psmt.executeUpdate();
             psmt.close();
-            return true;
+
         }
         catch (SQLException e){
 
@@ -81,6 +82,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
 
             return false;
         }
+        return true;
     }
 
     @Override
@@ -109,8 +111,10 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
                         resultSet.getString("grupo"),
                         resultSet.getString("entrenador"),
                         resultSet.getInt("cupo"),
-                        resultSet.getFloat("precio")
-
+                        resultSet.getFloat("precio"),
+                        resultSet.getDate("fechadepago1"),
+                        resultSet.getDate("fechadepago2"),
+                        resultSet.getDate("fechadepago3")
                 );
 
                 grupos.add(grupo);
@@ -141,26 +145,30 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
         Conn = connection.Connect();
         try {
             String updateQuery =
-                    "update grupos set fechainicio=?, fechafin=?, codigo=?, tipo=?, grupo= ?,  entrenador=?, " +
+                    "update grupos set fechainicio=?, fechafin=?, codigo=?, tipo=?, entrenador=?, " +
                             "precio=?, cupo=?," +
-                            " nombre=? where codigo= ?;"
+                            " nombre=?, fechadepago1=?, fechadepago2=? , fechadepago3=?,  grupo= ? where codigo= ?;"
                     ;
 
             psmt = Conn.prepareStatement(updateQuery);
 
-            psmt.setDate(1, new Date(entity.getFechaInicio().getTime()));
-            psmt.setDate(2, new Date( entity.getFechaFin().getTime()));
-            psmt.setString(3, entity.getCodigo());
-            psmt.setString(4, entity.getTipo().getCodigo());
+            psmt.setDate   (1,  new Date(entity.getFechaInicio().getTime()));
+            psmt.setDate   (2,  new Date( entity.getFechaFin().getTime()));
+            psmt.setString (3,  entity.getCodigo());
+            psmt.setString (4,  entity.getTipo().getCodigo());
             //psmt.setString(5, insert.getMatricula());
-            psmt.setString(5, entity.getCodigoEntrenador());
-            psmt.setFloat(6, entity.getPrecio());
-            psmt.setInt(7, entity.getCupo());
-            psmt.setString(8, entity.getNombre());
-            psmt.setString(9, entity.getCodigo());
+            psmt.setString (5,  entity.getCodigoEntrenador());
+            psmt.setFloat  (6,  entity.getPrecio());
+            psmt.setInt    (7,  entity.getCupo());
+            psmt.setString (8,  entity.getNombre());
+            psmt.setDate   (9,  new Date( entity.getFechaDePago1().getTime()));
+            psmt.setDate   (10, new Date( entity.getFechaDePago2().getTime()));
+            psmt.setDate   (11, new Date( entity.getFechaDePago3().getTime()));
+            psmt.setString (12, entity.getGrupo());
+            psmt.setString (13, entity.getCodigo());
 
             psmt.executeUpdate();
-            return true;
+            Conn.close();
         } catch(Exception e) {
             System.out.println(e.getMessage());
 
@@ -176,6 +184,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             }
             return false;
         }
+        return true;
     }
 
     @Override
@@ -190,7 +199,6 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             psmt.setString(1, codigo);
             psmt.executeQuery();
 
-
             resultSet = psmt.getResultSet();
 
             if(resultSet.next()) {
@@ -203,11 +211,13 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
                         resultSet.getString("grupo"),
                         resultSet.getString("entrenador"),
                         resultSet.getInt("cupo"),
-                        resultSet.getFloat("precio")
+                        resultSet.getFloat("precio"),
+                        resultSet.getDate("fechadepago1"),
+                        resultSet.getDate("fechadepago2"),
+                        resultSet.getDate("fechadepago3")
                 );
                 psmt.close();
                 Conn.close();
-
             }
         } catch(Exception e) {
             System.out.println(e.getMessage());
@@ -229,6 +239,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
 
     @Override
     public Boolean delete(String id) {
+
         return null;
     }
 }

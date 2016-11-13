@@ -20,6 +20,7 @@ public class EntrenadorModel<T extends Entrenador> implements ICRUD<T> {
     private PreparedStatement psmt;
     private GenerateID id;
     private Entrenador entrenador;
+    private PreparedStatement psmt1;
 
     public EntrenadorModel(int port, String passWord, String db_Name,String username ){
         this.port = port;
@@ -33,19 +34,31 @@ public class EntrenadorModel<T extends Entrenador> implements ICRUD<T> {
     @Override
     public Boolean insert(T entity) {
         String sql = "insert into entrenadores(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel) Values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-
+        String matricula =id.generateSessionKey(6);
+        String sql2 = "Select matricula from grupos where matricula= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
         try {
 
             psmt= Conn.prepareStatement(sql);
 
+            //verificando si el codigo existe
+            psmt1 = Conn.prepareStatement(sql2);
+            psmt1.setString(1, matricula);
+            psmt1.executeQuery();
+            resultSet= psmt1.getResultSet();
+
+
             psmt.setString(1, entity.getNombre());
             psmt.setString(2, entity.getApellidos());
             psmt.setDate(3, new java.sql.Date(entity.getFechaNacimiento().getTime()));
             psmt.setString(4, String.valueOf(entity.getSexo()));
-            //psmt.setString(5, entity.getMatricula());
-            psmt.setString(5, id.generateSessionKey(6));
+            if(resultSet.next()) {
+                matricula = id.generateSessionKey(6);
+                psmt.setString(5, matricula);
+            }else {
+                psmt.setString(5, matricula);
+            }
             psmt.setString(6, entity.getCedula());
             psmt.setString(7, entity.getEmail());
             psmt.setString(8, entity.getTelRes());

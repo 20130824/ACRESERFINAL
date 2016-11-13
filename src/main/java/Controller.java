@@ -40,7 +40,7 @@ public class Controller {
            // }
            System.out.println( grupoModel.readOne("fsdbn").getNombre());
 
-            Participante par = new Participante("Pierre Dany", "Ridore Lamothe", formatter.parse("1992-05-14"), 'M', "jkdj22", "JNNJN-MMHGMB", "ridoreda1992@gmail.com", "8294480042", "8099714287");
+            Participante par = new Participante("Pierre Dany", "Ridore Lamothe", formatter.parse("1992-05-14"), 'M', "jkdj22", "JNNJN-MMHGMB", "ridoreda1992@gmail.com", "8294480042", "8099714287", 0);
             participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
 
             ArrayList<Participante> participantes = participanteModel.getElements();
@@ -89,7 +89,7 @@ public class Controller {
 
                 System.out.println(date);
 
-                participanteModel.insert( new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes));
+                participanteModel.insert( new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes, 0));
 
             } catch (Exception ex){
                 System.out.println("Failed!");

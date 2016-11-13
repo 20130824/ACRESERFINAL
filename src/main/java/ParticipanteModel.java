@@ -14,6 +14,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
     private ResultSet resultSet;
     private PreparedStatement psmt;
     private GenerateID id;
+    private PreparedStatement psmt1;
     private Participante participante;
 
     public ParticipanteModel(int port, String passWord, String db_Name, String username ){
@@ -27,25 +28,39 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
     @Override
     @SuppressWarnings("Unchecked")
     public Boolean insert( T insert) {
-        String sql = "insert into participantes(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel) Values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-
+        String matricula =id.generateSessionKey(6);
+        String sql = "insert into participantes(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel, balance) Values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql2 = "Select matricula from grupos where matricula= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
+
         try {
 
 
             psmt= Conn.prepareStatement(sql);
 
+            //verificando si el codigo existe
+            psmt1 = Conn.prepareStatement(sql2);
+            psmt1.setString(1, matricula);
+            psmt1.executeQuery();
+            resultSet= psmt1.getResultSet();
+
             psmt.setString(1, insert.getNombre());
             psmt.setString(2, insert.getApellidos());
             psmt.setDate(3, new java.sql.Date(insert.getFechaNacimiento().getTime()));
             psmt.setString(4, String.valueOf(insert.getSexo()));
-          //psmt.setString(5, insert.getMatricula());
-            psmt.setString(5, id.generateSessionKey(6));
+
+            if(resultSet.next()) {
+                matricula = id.generateSessionKey(6);
+                psmt.setString(5, matricula);
+            }else {
+                psmt.setString(5, matricula);
+            }
             psmt.setString(6, insert.getCedula());
             psmt.setString(7, insert.getEmail());
             psmt.setString(8, insert.getTelRes());
             psmt.setString(9, insert.getTelCel());
+            psmt.setFloat(10, insert.getBalance());
 
             psmt.executeUpdate();
             psmt.close();
@@ -96,7 +111,8 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
                         resultSet.getString("cedula"),
                         resultSet.getString("email"),
                         resultSet.getString("telcel"),
-                        resultSet.getString("telres")
+                        resultSet.getString("telres"),
+                        resultSet.getFloat("balance")
                 );
 
                 participantes.add(participante);
@@ -130,7 +146,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
             String updateQuery =
                     "update participantes set nombres=?, apellidos= ?, fechanacimiento=?, sexo=?, matricula= ?,  cedula=?, " +
                             "email=?, telres=?," +
-                            " telcel=? where matricula = ?;"
+                            " telcel=?, balance=?  where matricula = ?;"
                     ;
 
             psmt = Conn.prepareStatement(updateQuery);
@@ -145,7 +161,8 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
             psmt.setString(7, entity.getEmail());
             psmt.setString(8, entity.getTelRes());
             psmt.setString(9, entity.getTelCel());
-            psmt.setString(10, entity.getMatricula());
+            psmt.setFloat(10, entity.getBalance());
+            psmt.setString(11, entity.getMatricula());
             psmt.executeUpdate();
             return true;
         } catch(Exception e) {
@@ -191,7 +208,8 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
                         resultSet.getString("cedula"),
                         resultSet.getString("email"),
                         resultSet.getString("telcel"),
-                        resultSet.getString("telres")
+                        resultSet.getString("telres"),
+                         resultSet.getFloat("balance")
                 );
                 psmt.close();
                 Conn.close();
