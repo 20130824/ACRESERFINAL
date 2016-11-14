@@ -193,7 +193,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
         Conn = connection.Connect();
 
         try {
-            String selectQuery = "SELECT * FROM grupo where codigo= ?";
+            String selectQuery = "SELECT * FROM grupos where codigo= ?";
 
             psmt = Conn.prepareStatement(selectQuery);
             psmt.setString(1, codigo);
@@ -240,6 +240,34 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
     @Override
     public Boolean delete(String id) {
 
-        return null;
+        connection = new DbConnection(username, passWord, db_Name, port);
+        Conn = connection.Connect();
+        try {
+
+            String deleteQuery = "DELETE FROM grupos WHERE codigo = ?";
+
+            psmt = Conn.prepareStatement(deleteQuery);
+            psmt.setString(1, id);
+            psmt.executeUpdate();
+            psmt.close();
+            Conn.close();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+
+            try {
+                if(null != psmt) {
+                    psmt.close();
+                }
+                if(null != Conn) {
+                    Conn.close();
+                }
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+            }
+            return  false;
+        }
+
+        return true;
+
     }
 }
