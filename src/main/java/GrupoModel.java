@@ -86,6 +86,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<T> getElements() {
 
         String query = "SELECT * FROM grupos;";
@@ -188,6 +189,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T readOne(String codigo ) {
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();

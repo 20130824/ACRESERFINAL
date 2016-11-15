@@ -12,17 +12,24 @@ import java.util.Date;
  */
 public class Voluntario {
     private String participanteID;
-    private Enum TipoVoluntario;
+    private Volunteers TipoVoluntario;
     private Date FechaInicio;
     private String Codigo;
 
-    public Voluntario(String participanteID, Enum tipoVoluntario, Date fechaInicio, String codigo) {
+    public Voluntario(String participanteID, Volunteers tipoVoluntario, Date fechaInicio, String codigo) {
         this.participanteID = participanteID;
         TipoVoluntario = tipoVoluntario;
         FechaInicio = fechaInicio;
         Codigo = codigo;
     }
+    public enum Volunteers{
+        STAFF,
+        SENIOR,
+        DOOR_GUARD,
+        AYUDANTE_EXTERNO,
+        CAPITAN
 
+    }
     public String getParticipanteID() {
         return participanteID;
     }
@@ -31,11 +38,11 @@ public class Voluntario {
         this.participanteID = participanteID;
     }
 
-    public Enum getTipoVoluntario() {
+    public Volunteers getTipoVoluntario() {
         return TipoVoluntario;
     }
 
-    public void setTipoVoluntario(Enum tipoVoluntario) {
+    public void setTipoVoluntario(Volunteers tipoVoluntario) {
         TipoVoluntario = tipoVoluntario;
     }
 

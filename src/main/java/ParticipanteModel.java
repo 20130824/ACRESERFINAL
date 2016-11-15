@@ -86,7 +86,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
     }
 
     @Override
-    @SuppressWarnings("Unchecked")
+    @SuppressWarnings("unchecked")
     public ArrayList <T> getElements() {
         String query = "SELECT * FROM participantes;";
 
@@ -153,7 +153,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
 
             psmt.setString(1, entity.getNombre());
             psmt.setString(2, entity.getApellidos());
-            psmt.setDate(3, new java.sql.Date(entity.getFechaNacimiento().getDate()));
+            psmt.setDate(3, new java.sql.Date(entity.getFechaNacimiento().getTime()));
             psmt.setString(4, String.valueOf(entity.getSexo()));
             //psmt.setString(5, insert.getMatricula());
             psmt.setString(5, entity.getMatricula());
@@ -183,7 +183,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
     }
 
     @Override
-    @SuppressWarnings("Uncheked")
+    @SuppressWarnings("unchecked")
     public T readOne(String matricula) {
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
