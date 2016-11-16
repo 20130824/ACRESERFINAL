@@ -29,8 +29,8 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
     @SuppressWarnings("Unchecked")
     public Boolean insert( T insert) {
         String matricula =id.generateSessionKey(6);
-        String sql = "insert into participantes(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel, balance) Values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        String sql2 = "Select matricula from grupos where matricula= ?";
+        String sql = "insert into participantes(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel, balance) Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql2 = "Select matricula from participantes where matricula= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
 

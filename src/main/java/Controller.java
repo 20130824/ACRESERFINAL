@@ -30,23 +30,32 @@ public class Controller {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
             entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
-            grupoModel = new GrupoModel<>(5432, "1234", "Acreser", "postgres");
-
+           // Iterator <Entrenador> iterator = entrenadorModel.getElements().iterator();
+           // while(iterator.hasNext())
+           // {
+           //     System.out.println(iterator.next().getNombre());
+          //  }
+           // grupoModel = new GrupoModel<>(5432, "1234", "Acreser", "postgres");
+            System.out.println(entrenadorModel.readOne("jkdh67").getNombre());
             //Grupo grupo = new Grupo(null, "Antorcha" , formatter.parse("2016-11-12") , formatter.parse("2016-12-14"), new Taller(null, null, "da-d-1"), "Antorcha-60", "h3j12k", 100, Float.parseFloat("2367.6"));
+            //Entrenador(String nombre, String apellidos, Date fechaNacimiento, char sexo, String matricula, String cedula, String email, String telCel, String telRes) {
 
+           // Entrenador entrenador = new Entrenador("Isaac j.", "Perez R.", formatter.parse("1995-05-03"), 'M',"h3j12k", "JNNJN-MMHGMB", "issacperez@gmail.com", "8294480042", "8099714487");
+            //System.out.println(entrenadorModel.update(entrenador));
             //Iterator<Grupo> iterator = grupoModel.getElements().iterator();
            // while (iterator.hasNext()){
             //    System.out.println(iterator.next().getNombre());
            // }
-           System.out.println( grupoModel.readOne("fsdbn").getNombre());
+           //System.out.println( grupoModel.readOne("fsdbn").getNombre());
 
-            Participante par = new Participante("Pierre Dany", "Ridore Lamothe", formatter.parse("1992-05-14"), 'M', "jkdj22", "JNNJN-MMHGMB", "ridoreda1992@gmail.com", "8294480042", "8099714287", 0);
-            participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
+          // Participante par = new Participante("Pierre Dany", "Ridore Lamothe", formatter.parse("1992-05-14"), 'M',"uPm39t", "JNNJN-MMHGMB", "ridoreda1992@gmail.com", "8294480042", "8099714287", 9000);
+           participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
+            System.out.println(participanteModel.readOne("uPm39t").getBalance());
+          //  ArrayList<Participante> participantes = participanteModel.getElements();
 
-            ArrayList<Participante> participantes = participanteModel.getElements();
-
-            System.out.println("Participantes: " + participantes.get(0).getNombre() + "  " + participantes.get(1).getNombre() + "   " + participantes.get(2).getNombre());
-            System.out.println();
+            // System.out.println(participanteModel.update(par));
+          //  System.out.println("Participantes: " + participantes.get(0).getNombre() );
+            //System.out.println();
 
         } catch (Exception ex) {
             ex.getMessage();
@@ -85,11 +94,11 @@ public class Controller {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = formatter.parse(fecha);
 
-                entrenadorModel= new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
+                participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
 
                 System.out.println(date);
 
-                participanteModel.insert( new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes, 0));
+                System.out.println(participanteModel.insert( new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes, 0)));
 
             } catch (Exception ex){
                 System.out.println("Failed!");
@@ -127,7 +136,7 @@ public class Controller {
                 Date date = formatter.parse(fecha);
 
                 entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
-                entrenadorModel.insert(new Entrenador(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes));
+                System.out.println(entrenadorModel.insert(new Entrenador(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes)));
 
             } catch (Exception ex){
                 System.out.println("Failed!");

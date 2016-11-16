@@ -117,7 +117,6 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
                         resultSet.getDate("fechadepago2"),
                         resultSet.getDate("fechadepago3")
                 );
-
                 grupos.add(grupo);
             }
             psmt.close();

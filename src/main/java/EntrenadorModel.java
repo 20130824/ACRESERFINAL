@@ -35,7 +35,7 @@ public class EntrenadorModel<T extends Entrenador> implements ICRUD<T> {
     public Boolean insert(T entity) {
         String sql = "insert into entrenadores(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel) Values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
         String matricula =id.generateSessionKey(6);
-        String sql2 = "Select matricula from grupos where matricula= ?";
+        String sql2 = "Select matricula from entrenadores where matricula= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
         try {
@@ -89,6 +89,7 @@ public class EntrenadorModel<T extends Entrenador> implements ICRUD<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<T> getElements() {
         String query = "SELECT * FROM entrenadores;";
 
@@ -202,6 +203,9 @@ public class EntrenadorModel<T extends Entrenador> implements ICRUD<T> {
             resultSet = psmt.getResultSet();
 
             if(resultSet.next()) {
+
+                char dato = resultSet.getString("sexo").charAt(0);
+
                 entrenador = new Entrenador(
                         resultSet.getString("nombres"),
                         resultSet.getString("apellidos"),
