@@ -95,10 +95,10 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   <h2>Registrar Participante</h2>
   <h3>Datos Personales:</h3>
 
-  <form method='post' action='/registrarParticipantes'>
+  <form method='post' action='/registrarParticipantes' data-toggle="validator" role="form">
   <div class="form-group">
   <label>Nombres:</label>
-  <input type="text" name="nombres" class="form-control" required="required" >
+  <input type="text" name="nombres" class="form-control" required="required" placeholder="Nombre">
   </div>
   
   <div class="form-group">
@@ -112,7 +112,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
  </div>
  <div class="form-group">
  <label>Cedula:</label>
- <input type="text" name="cedula" class="form-control">
+ <input type="text" name="cedula" pattern="[0-9]" class="form-control" maxlength="14" placeholder="XXXXXXXXXXX" required="required">
  </div>
  <div class="form-group">
  <label>Sexo:</label>
@@ -135,11 +135,45 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
    </div>
    <div class="form-group">
     <label>Telefono Celular:</label>
-    <input type="text" id="UserMobile" maxlength="14" data-fv-numeric="true" data-fv-numeric-message="Please enter valid phone numbers" data-fv-phone-country11="IN" required="required" data-fv-notempty-message="This field cannot be left blank." class="form-control" name="celular" >
+       <div class="container">
+           <div class="col-xs-4">
+               <div class="form-group phone-number">
+                   <div class="col-xs-3">
+                       <input type="tel" name="cel" class="form-control" value="" size="3" maxlength="3" required="required" title="">
+                   </div>
+
+                   <div class="col-xs-3">
+                       <input type="tel" name="cel" class="form-control" value="" size="3" maxlength="3" required="required" title="">
+                   </div>
+
+
+                   <div class="col-xs-4">
+                       <input type="tel" name="cel" class="form-control" value="" size="4" maxlength="4" required="required" title="">
+                   </div>
+               </div>
+           </div>
+       </div>
     </div>
     <div class ="form-group">
     <label>Telefono Residencial:</label>
-    <input type="tel" name="residencial" class="form-control">
+        <div class="container">
+            <div class="col-xs-4">
+                <div class="form-group phone-number">
+                    <div class="col-xs-3">
+                        <input type="tel" name="residencial" class="form-control" value="" size="3" maxlength="3" required="required" title="">
+                    </div>
+
+                    <div class="col-xs-3">
+                        <input type="tel" name="residencial" class="form-control" value="" size="3" maxlength="3" required="required" title="">
+                    </div>
+
+
+                    <div class="col-xs-4">
+                        <input type="tel" name="residencial" class="form-control" value="" size="4" maxlength="4" required="required" title="">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
      <div class="form-group">
     <input type="submit" id="btnSubmit" class="form-control">
