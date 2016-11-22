@@ -24,6 +24,7 @@ public class Controller {
     public  static  ICRUD <Entrenador>      entrenadorModel;
     public  static  ICRUD <Grupo>           grupoModel;
     public  static  ICRUD <Taller>          tallerModel;
+    public  static  ICRUD <Ciclo>           cicloModel;
     public static void main(String[] args) {
         Spark.staticFileLocation("/templates");
         try {
@@ -173,7 +174,7 @@ public class Controller {
 
             try {
 
-                tallerModel = new TallerModel<Taller>(5432, "1234", "Acreser", "postgres");
+                tallerModel = new TallerModel<>(5432, "1234", "Acreser", "postgres");
                 System.out.println(tallerModel.insert(new Taller(nombre, descripcion, null,prerequisito)));
 
             } catch (Exception ex){
@@ -228,11 +229,25 @@ public class Controller {
             String tipo = request.queryParams("tipo");
             String talleres = request.queryParams("talleres");
 
+
             TipoCiclo tipoCiclo;
             if (tipo== "Adultos"){
                 tipoCiclo = TipoCiclo.ADULTOS;
             }else{
                 tipoCiclo = TipoCiclo.JOVENES;
+            }
+
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechaini = formatter.parse(fechaInicio);
+                Date fechfin = formatter.parse(fechaFin);
+                cicloModel= new CicloModel<>(5432, "1234", "Acreser", "postgres");
+
+                System.out.println(cicloModel.insert(new Ciclo(nombre, null, fechaini, fechfin, tipoCiclo , new Taller(talleres, null, null, null))));
+
+            } catch (Exception ex){
+                System.out.println("Failed!");
+                System.out.println(ex.getMessage());
             }
 
             System.out.println("Programa "+nombre+ "  " + fechaInicio + " " + fechaFin + " " + tipo + " "  + talleres);

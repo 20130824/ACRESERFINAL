@@ -33,7 +33,7 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
     public Boolean insert(T entity) {
 
         String codigo =id.generateSessionKey(6);
-        String sql = "insert into ciclo(nombre, codigo, fechainicio, fechafin , tipo) Values (?, ?, ?, ?,?);";
+        String sql = "insert into ciclo(nombre, codigo, fechainicio, fechafin , tipo, talleres) Values (?, ?, ?, ?,?, ?);";
         String sql2 = "Select codigo from ciclos where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
@@ -58,6 +58,8 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
             psmt.setDate      (3, new java.sql.Date(entity.getFechaInicio().getTime()));
             psmt.setDate      (4, new java.sql.Date(entity.getFechaFin().getTime()));
             psmt.setInt       (5, entity.getTipo());
+            psmt.setString    (6, entity.getTalleres().getNombre() );
+
             psmt.executeUpdate();
             psmt.close();
             return true;
@@ -102,7 +104,8 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
                         resultSet.getString("Codigo"),
                         new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                         new java.util.Date(resultSet.getDate("fechafin").getTime()),
-                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES
+                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES,
+                        new Taller(resultSet.getString("talleres"), null, null, null)
                 );
 
                 ciclos.add(ciclo);
@@ -135,7 +138,7 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
         Conn = connection.Connect();
         try {
             String updateQuery =
-                    "update ciclo set nombre=?, codigo= ?, fechaincio=?, fechafin=?, tipo=?  where codigo = ?;"
+                    "update ciclo set nombre=?, codigo= ?, fechaincio=?, fechafin=?, tipo=? , talleres=?  where codigo = ?;"
                     ;
 
             psmt = Conn.prepareStatement(updateQuery);
@@ -145,7 +148,8 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
             psmt.setDate  (3, new java.sql.Date(entity.getFechaInicio().getTime()));
             psmt.setDate  (4, new java.sql.Date(entity.getFechaFin().getTime()));
             psmt.setInt   (5, entity.getTipo());
-            psmt.setString(6, entity.getCodigo());
+            psmt.setString(6, entity.getTalleres().getNombre());
+            psmt.setString(7, entity.getCodigo());
 
             psmt.executeUpdate();
             return true;
@@ -188,7 +192,8 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
                         resultSet.getString("codigo"),
                         new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                         new java.util.Date(resultSet.getDate("fechafin").getTime()),
-                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES
+                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES,
+                        new Taller(resultSet.getString("talleres"), null, null, null)
                 );
                 psmt.close();
                 Conn.close();

@@ -9,9 +9,11 @@ public class Ciclo {
     private Date FechaInicio;
     private Date FechaFin;
     private int Tipo; // Para arreglar
+    private  Taller talleres;
 
 
-    public Ciclo (String nombre, String codigo, Date fechaFin, Date fechaInicio, TipoCiclo tipoCiclo ){
+
+    public Ciclo (String nombre, String codigo, Date fechaFin, Date fechaInicio, TipoCiclo tipoCiclo, Taller talleres ){
         this.Nombre = nombre;
         this.Codigo = codigo;
         this.FechaFin = fechaFin;
@@ -19,7 +21,13 @@ public class Ciclo {
         this.Tipo = tipoCiclo.getTipoCicloValue();
 
     }
+    public Taller getTalleres() {
+        return talleres;
+    }
 
+    public void setTalleres(Taller talleres) {
+        this.talleres = talleres;
+    }
     public int getTipo() {
         return Tipo;
     }
