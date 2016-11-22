@@ -11,11 +11,14 @@ public class Taller {
     private String Nombre;
     private String Descripcion;
     private String Codigo;
+    private String Prerequisito;
 
-    public Taller(String nombre, String descripcion, String codigo) {
+    public Taller(String nombre, String descripcion, String codigo, String prerequisito) {
         this.Nombre = nombre;
         this.Descripcion = descripcion;
         this.Codigo = codigo;
+        this.Prerequisito = prerequisito;
+
     }
 
     public String getNombre() {
@@ -40,6 +43,14 @@ public class Taller {
 
     public void setCodigo(String Codigo) {
         this.Codigo = Codigo;
+    }
+
+    public String getPrerequisito() {
+        return Prerequisito;
+    }
+
+    public void setPrerequisito(String prerequisito) {
+        Prerequisito = prerequisito;
     }
 
 }

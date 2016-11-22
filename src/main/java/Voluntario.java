@@ -28,7 +28,6 @@ public class Voluntario {
         DOOR_GUARD,
         AYUDANTE_EXTERNO,
         CAPITAN
-
     }
     public String getParticipanteID() {
         return participanteID;

@@ -32,7 +32,7 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
     public Boolean insert(T entity) {
 
         String codigo =id.generateSessionKey(6);
-        String sql = "insert into voluntarios(participanteid, tipovoluntarioid, fechanainicio, codigo) Values (?, ?, ?, ?);";
+        String sql = "insert into voluntarios(participanteid, tipovoluntarioid, fechainicio, codigo) Values (?, ?, ?, ?);";
         String sql2 = "Select codigo from voluntarios where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
@@ -58,7 +58,6 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
             }else {
                 psmt.setString(4, codigo);
             }
-
 
             psmt.executeUpdate();
             psmt.close();

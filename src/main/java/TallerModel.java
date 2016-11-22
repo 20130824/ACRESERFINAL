@@ -30,7 +30,7 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
     public Boolean insert(T entity) {
 
         String codigo =id.generateSessionKey(6);
-        String sql = "insert into talleres (nombre, descripcion, codigo) Values (?, ?, ?);";
+        String sql = "insert into talleres (nombre, descripcion, codigo, prerequisito) Values (?, ?, ?, ?);";
         String sql2 = "Select codigo from talleres where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
@@ -52,6 +52,7 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
             }else {
                 psmt.setString(3, codigo);
             }
+            psmt.setString(4, entity.getPrerequisito());
             psmt.executeUpdate();
             psmt.close();
 
@@ -77,8 +78,9 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<T> getElements() {
-        String query = "SELECT * FROM grupos;";
+        String query = "SELECT * FROM talleres;";
 
         ArrayList<Taller> talleres =  new ArrayList<>();
 
@@ -95,7 +97,8 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
                 taller = new Taller(
                         resultSet.getString("nombre"),
                         resultSet.getString("descripcion"),
-                        resultSet.getString("codigo")
+                        resultSet.getString("codigo"),
+                        resultSet.getString("prerequisito")
                 );
 
                talleres.add(taller);
@@ -126,14 +129,15 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
         Conn = connection.Connect();
         try {
             String updateQuery =
-                    "update talleres set nombre=?, descripcion=?, codigo=? where codigo= ?;";
+                    "update talleres set nombre=?, descripcion=?, codigo=?, prerequisito=? where codigo= ?;";
 
             psmt = Conn.prepareStatement(updateQuery);
 
             psmt.setString   (1,  entity.getNombre());
             psmt.setString   (2,  entity.getDescripcion());
             psmt.setString   (3,  entity.getCodigo());
-            psmt.setString   (4,  entity.getCodigo());
+            psmt.setString   (4,  entity.getPrerequisito());
+            psmt.setString   (5,  entity.getCodigo());
 
             psmt.executeUpdate();
             psmt.close();
@@ -176,7 +180,8 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
                 taller = new Taller (
                         resultSet.getString("nombre"),
                         resultSet.getString("descripcion"),
-                        resultSet.getString("codigo")
+                        resultSet.getString("codigo"),
+                        resultSet.getString("prerequisito")
                 );
 
                 psmt.close();
@@ -201,6 +206,7 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Boolean delete(String id) {
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();

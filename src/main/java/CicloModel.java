@@ -1,10 +1,13 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Dany on 06/11/2016.
+ * Created by Dany on 21/11/2016.
  */
-public class GrupoModel<T extends Grupo> implements ICRUD<T> {
+public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
     private  DbConnection connection;
     private Connection Conn ;
     private String username;
@@ -15,9 +18,9 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
     private PreparedStatement psmt;
     private PreparedStatement psmt1;
     private GenerateID id;
-    private Grupo grupo;
+    private Ciclo ciclo;
 
-    public GrupoModel(int port, String passWord, String db_Name,String username ){
+    public CicloModel(int port, String passWord, String db_Name,String username ){
         this.port = port;
         this.passWord = passWord;
         this.db_Name = db_Name;
@@ -28,13 +31,14 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
 
     @Override
     public Boolean insert(T entity) {
+
         String codigo =id.generateSessionKey(6);
-        String sql = "insert into grupos (fechainicio, fechafin, codigo, tipo, grupo, entrenador, precio,  cupo, nombre, fechapago1, fechapago2, fechapago3) Values (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?);";
-        String sql2 = "Select codigo from grupos where codigo= ?";
+        String sql = "insert into ciclo(nombre, codigo, fechainicio, fechafin , tipo) Values (?, ?, ?, ?,?);";
+        String sql2 = "Select codigo from ciclos where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
-        try {
 
+        try {
 
             psmt= Conn.prepareStatement(sql);
 
@@ -44,26 +48,19 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             psmt1.executeQuery();
             resultSet= psmt1.getResultSet();
 
-            psmt.setDate    (1,  new Date(entity.getFechaInicio().getTime()));
-            psmt.setDate    (2,  new Date(entity.getFechaFin().getTime()));
+            psmt.setString   (1, entity.getNombre()); // need the field of the participante  -- participanteId
             if(resultSet.next()) {
                 codigo = id.generateSessionKey(6);
-                psmt.setString(3, codigo);
+                psmt.setString(2, codigo);
             }else {
-                psmt.setString(3, codigo);
+                psmt.setString(2, codigo);
             }
-            psmt.setString  (4,  entity.getTipo().getCodigo());
-            psmt.setString  (5,  entity.getGrupo());
-            psmt.setString  (6,  entity.getCodigoEntrenador());
-            psmt.setFloat   (7,  entity.getPrecio());
-            psmt.setInt     (8,  entity.getCupo());
-            psmt.setString  (9,  entity.getNombre());
-            psmt.setDate    (10, new Date( entity.getFechaDePago1().getTime()));
-            psmt.setDate    (11, new Date( entity.getFechaDePago2().getTime()));
-            psmt.setDate    (12, new Date( entity.getFechaDePago3().getTime()));
+            psmt.setDate      (3, new java.sql.Date(entity.getFechaInicio().getTime()));
+            psmt.setDate      (4, new java.sql.Date(entity.getFechaFin().getTime()));
+            psmt.setInt       (5, entity.getTipo());
             psmt.executeUpdate();
             psmt.close();
-
+            return true;
         }
         catch (SQLException e){
 
@@ -82,16 +79,14 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
 
             return false;
         }
-        return true;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<T> getElements() {
+        String query = "SELECT * FROM ciclo;";
 
-        String query = "SELECT * FROM grupos;";
-
-        ArrayList<Grupo> grupos =  new ArrayList<>();
+        ArrayList<Ciclo> ciclos =  new ArrayList<>();
 
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
@@ -99,28 +94,22 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
         try {
             psmt= Conn.prepareStatement(query);
             psmt.executeQuery();
-
             resultSet = psmt.getResultSet();
 
             while(resultSet.next()) {
-                grupo = new Grupo(
-                        resultSet.getString("codigo"),
+                ciclo = new Ciclo(
                         resultSet.getString("nombre"),
+                        resultSet.getString("Codigo"),
                         new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                         new java.util.Date(resultSet.getDate("fechafin").getTime()),
-                        new Taller(null,null,resultSet.getString("tipo"), null),
-                        resultSet.getString("grupo"),
-                        resultSet.getString("entrenador"),
-                        resultSet.getInt("cupo"),
-                        resultSet.getFloat("precio"),
-                        resultSet.getDate("fechadepago1"),
-                        resultSet.getDate("fechadepago2"),
-                        resultSet.getDate("fechadepago3")
+                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES
                 );
-                grupos.add(grupo);
+
+                ciclos.add(ciclo);
             }
             psmt.close();
             Conn.close();
+
         } catch(Exception e) {
             System.out.println(e.getMessage());
 
@@ -135,40 +124,31 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
                 sqlException.printStackTrace();
             }
         }
-        return (ArrayList<T>)grupos;
+
+
+        return (ArrayList<T>) ciclos;
     }
 
     @Override
     public Boolean update(T entity) {
-
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
         try {
             String updateQuery =
-                    "update grupos set fechainicio=?, fechafin=?, codigo=?, tipo=?, entrenador=?, " +
-                            "precio=?, cupo=?," +
-                            " nombre=?, fechadepago1=?, fechadepago2=? , fechadepago3=?,  grupo= ? where codigo= ?;"
+                    "update ciclo set nombre=?, codigo= ?, fechaincio=?, fechafin=?, tipo=?  where codigo = ?;"
                     ;
 
             psmt = Conn.prepareStatement(updateQuery);
 
-            psmt.setDate   (1,  new Date(entity.getFechaInicio().getTime()));
-            psmt.setDate   (2,  new Date( entity.getFechaFin().getTime()));
-            psmt.setString (3,  entity.getCodigo());
-            psmt.setString (4,  entity.getTipo().getCodigo());
-            //psmt.setString(5, insert.getMatricula());
-            psmt.setString (5,  entity.getCodigoEntrenador());
-            psmt.setFloat  (6,  entity.getPrecio());
-            psmt.setInt    (7,  entity.getCupo());
-            psmt.setString (8,  entity.getNombre());
-            psmt.setDate   (9,  new Date( entity.getFechaDePago1().getTime()));
-            psmt.setDate   (10, new Date( entity.getFechaDePago2().getTime()));
-            psmt.setDate   (11, new Date( entity.getFechaDePago3().getTime()));
-            psmt.setString (12, entity.getGrupo());
-            psmt.setString (13, entity.getCodigo());
+            psmt.setString(1, entity.getNombre());
+            psmt.setString(2, entity.getCodigo());
+            psmt.setDate  (3, new java.sql.Date(entity.getFechaInicio().getTime()));
+            psmt.setDate  (4, new java.sql.Date(entity.getFechaFin().getTime()));
+            psmt.setInt   (5, entity.getTipo());
+            psmt.setString(6, entity.getCodigo());
 
             psmt.executeUpdate();
-            Conn.close();
+            return true;
         } catch(Exception e) {
             System.out.println(e.getMessage());
 
@@ -184,41 +164,35 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             }
             return false;
         }
-        return true;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public T readOne(String codigo ) {
+    public T readOne(String codigo) {
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
 
         try {
-            String selectQuery = "SELECT * FROM grupos where codigo= ?";
+            String selectQuery = "SELECT * FROM ciclo  where codigo= ?";
 
             psmt = Conn.prepareStatement(selectQuery);
             psmt.setString(1, codigo);
             psmt.executeQuery();
 
+
             resultSet = psmt.getResultSet();
 
             if(resultSet.next()) {
-                grupo = new Grupo (
-                        resultSet.getString("codigo"),
+                ciclo = new Ciclo(
                         resultSet.getString("nombre"),
+                        resultSet.getString("codigo"),
                         new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                         new java.util.Date(resultSet.getDate("fechafin").getTime()),
-                        new Taller (null, null, resultSet.getString("tipo"), null),
-                        resultSet.getString("grupo"),
-                        resultSet.getString("entrenador"),
-                        resultSet.getInt("cupo"),
-                        resultSet.getFloat("precio"),
-                        resultSet.getDate("fechadepago1"),
-                        resultSet.getDate("fechadepago2"),
-                        resultSet.getDate("fechadepago3")
+                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES
                 );
                 psmt.close();
                 Conn.close();
+
             }
         } catch(Exception e) {
             System.out.println(e.getMessage());
@@ -235,23 +209,24 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             }
             return null;
         }
-        return (T) grupo;
+        return (T)ciclo;
     }
 
     @Override
-    public Boolean delete(String id) {
-
+    public Boolean delete(String codigo) {
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
         try {
 
-            String deleteQuery = "DELETE FROM grupos WHERE codigo = ?";
+            String deleteQuery = "DELETE FROM ciclo WHERE codigo = ?";
 
             psmt = Conn.prepareStatement(deleteQuery);
-            psmt.setString(1, id);
+            psmt.setString(1, codigo);
             psmt.executeUpdate();
             psmt.close();
             Conn.close();
+
+
         }catch (Exception e) {
             System.out.println(e.getMessage());
 
@@ -269,6 +244,5 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
         }
 
         return true;
-
     }
 }
