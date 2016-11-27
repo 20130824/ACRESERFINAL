@@ -26,7 +26,7 @@
   </head>
 
 <body>
- <nav class="navbar navbar-default navbar-fixed-top">
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -48,10 +48,8 @@
 
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Participantes</a></li>
-              <li><a href="#">Talleres</a></li>
-              <li><a href="#">Entrenadores</a></li>
-              <li><a href="#"></a></li>
+              <li><a href="/enviarMaterial">Enviar Material a Grupos</a></li>
+              <li><a href="#/enviarPromocion">Enviar Promociones</a></li>
             </ul>
           </li>
 
@@ -94,6 +92,7 @@
 <div class="row header" style="text-align:center">
 <h3>Cuentas por cobrar</h3>
 <h5>Los participantes que se muestran en esta lista tienen pago pendiente a la fecha</h5>
+<form method='post' action='/cuentasPorCobrar' >
 </div>
 <table id="myTable" class="table table-striped" >  
         <thead>  
@@ -182,6 +181,7 @@
         </tbody>  
       </table>  
 	  </div>
+      </form>
 </body>  
 <script>
 $(document).ready(function(){
