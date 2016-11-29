@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inicio</title>
+    <title>Realizar Pago</title>
     <link href="css/botones.css" rel="stylesheet">
     <!-- Bootstrap -->
 	<link href="css/bootstrap.css" rel="stylesheet">
@@ -36,7 +36,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   </head>
   <body style="padding-top: 70px">
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+ <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -99,44 +99,10 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
     <!-- /.container-fluid -->
   </nav>
 
-  <div class="col-md-4 col-md-offset-4">
-  <h1>Registrar Voluntario:</h1>
-  <form>
-
-
-<div class="form-group">
-     <label>Participante:</label>
-     <select class="selectpicker" data-live-search="true" required="required">
-  <option >Fula>
-  <option >Mengano</option>
-  <option >Perencejo</option>
-</select>
-</div>
-
- <div class="form-group">
-     <label>Funcion:</label>
-     <select class="selectpicker" multiple data-actions-box="true">
-  <option >Fulano</option>
-  <option >Mengano</option>
-  <option >Perencejo</option>
-</select>
-</div>3
-
-<div class="form-group">
-<label>Fecha de realización:</label>
-<input type="date" id="fechaRealizado" name="fechaPago" size="20" class="form-control" required="required"/>
-</div>
-
-<div class="form-group">
-<label>Observaciones:</label>
-<textarea class="form-control"></textarea>
-</div>
-
-  <div class="form-group">
-    <input type="submit" id="btnSubmit" value="Registrar" class="form-control">
+    <div class="container">
+      #parse( $template )
     </div>
-  </form>
-  </div>
+
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -144,13 +110,13 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="js/bootstrap.js"></script>
-
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+       <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js"></script>
-  </body>
+</body>
 </html>
