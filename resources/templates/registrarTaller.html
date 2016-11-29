@@ -42,7 +42,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   </head>
   <body style="padding-top: 70px">
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -64,10 +64,8 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Participantes</a></li>
-              <li><a href="#">Talleres</a></li>
-              <li><a href="#">Entrenadores</a></li>
-              <li><a href="#"></a></li>
+              <li><a href="/enviarMaterial">Enviar Material a Grupos</a></li>
+              <li><a href="#/enviarPromocion">Enviar Promociones</a></li>
             </ul>
           </li>
 
@@ -115,7 +113,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
  
  <div class="form-group">
  <label>Pre-requisito:</label>
- <select name="prerequisito" class="form-control" required="required"></select>
+ <select name="prerequisito" class="form-control" required></select>
  </div>
     
     <div class="form-group">
