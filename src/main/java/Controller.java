@@ -188,7 +188,7 @@ public class Controller {
             return new ModelAndView(model, "templates/registrarTaller.html");
         }, new VelocityTemplateEngine());
 
-        get("/registrarGrupo", (request, response) -> {
+         get("/registrarGrupo", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
 
