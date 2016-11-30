@@ -122,24 +122,25 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   <form method='post' action='/registrarGrupo' style="padding-bottom:20px">
   <div class="form-group">
   <label>Nombre:</label>
-  <input name="nombre" type="text" class="form-control" >
+  <input name="nombre" type="text" class="form-control" required/>
   </div> 
  
  <div class="form-group">
  <label>Fecha de Inicio:</label>
-   <input type="date" id="fechaInicio" name="fechaInicio" size="20" class="form-control" />
+   <input type="date" id="fechaInicio" name="fechaInicio" size="20" class="form-control" required/>
  </div>
  
  <div class="form-group">
  <label>Fecha de Fin:</label>
-   <input type="date" id="fechaFin" name="fechaFin" size="20" class="form-control" />
+   <input type="date" id="fechaFin" name="fechaFin" size="20" class="form-control" required/>
  </div>
  
  <div class="form-group">
  <label>Tipo:</label>
- <select id="selectorTaller" name="tipo" class="form-control">
+ <select id="selectorTaller" name="tipo" class="form-control" required>
+     <option value="" selected disabled>Nothing Selected</option>
      <option value="1">Discovery</option>
-     <option value="1">Intensive</option>
+     <option value="2">Intensive</option>
      <option value="3">LP</option>
  </select>
  </div>
@@ -149,40 +150,47 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
         <h3>Fecha  de pago: </h3>
         <div class="form-group">
             <label>Fecha 1</label>
-        <input type="date" id="fecha0" name="fecha0" size="20" class="form-control" />
+        <input type="date" id="fecha0" name="fecha0" size="20" class="form-control" required/>
             </div>
     </div>
     <div id="3" class="fechas" style="display:none">
         <h3>Fechas de pago: </h3>
         <div class="form-group">
         <label>Fecha 1</label>
-        <input type="date" id="fecha1" name="fecha1" size="20" class="form-control" />
+        <input type="date" id="fecha1" name="fecha1" size="20" class="form-control" required/>
             </div>
         <div class="form-group">
         <label>Fecha 2</label>
-        <input type="date" id="fecha2" name="fecha2" size="20" class="form-control" />
+        <input type="date" id="fecha2" name="fecha2" size="20" class="form-control" required/>
             </div>
         <div class="form-group">
         <label>Fecha 3</label>
-        <input type="date" id="fecha3" name="fecha3" size="20" class="form-control" />
+        <input type="date" id="fecha3" name="fecha3" size="20" class="form-control" required/>
             </div>
     </div>
 </div>
 
  <div class="form-group">
  <label>Entrenador:</label>
- <select name="entrenador" class="form-control"></select>
+ <select name="entrenador" class="form-control" required>
+     <option value="" selected disabled>Nothing Selected</option>
+     #set($i=1)
+     #foreach ($entrenador in $entrenadores)
+     <option value=$i>$entrenador.getNombre()</option>
+        #set($i = $i+ 1)
+     #end
+ </select>
  </div>
-    
+
   
   	 <div class ="form-group">
     <label>Cupo:</label>
-    <input name="cupo" type="number" class="form-control">
+    <input name="cupo" type="number" class="form-control" required/>
     </div>
     
     <div class ="form-group">
     <label>Costo:</label>
-    <input name="costo" type="number" class="form-control">
+    <input name="costo" type="number" class="form-control" required/>
     </div>
      <div class="form-group">
     <input type="submit" id="btnSubmit" class="form-control">
@@ -192,8 +200,6 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
   <script src="js/jquery-1.11.2.min.js"></script>
-
-
 
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
   <script src="js/bootstrap.js"></script>

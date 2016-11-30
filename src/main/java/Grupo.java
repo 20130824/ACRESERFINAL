@@ -38,8 +38,6 @@ public class Grupo {
 
     }
 
-
-
     public String getCodigo() {
         return Codigo;
     }

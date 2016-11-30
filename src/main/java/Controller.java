@@ -8,7 +8,6 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,12 +19,13 @@ import static spark.Spark.*;
 
 public class Controller {
 
-    public  static  ICRUD <Participante>    participanteModel;
-    public  static  ICRUD <Entrenador>      entrenadorModel;
-    public  static  ICRUD <Grupo>           grupoModel;
-    public  static  ICRUD <Taller>          tallerModel;
-    public  static  ICRUD <Ciclo>           cicloModel;
-    public  static String layout;
+    private  static  ICRUD <Participante>    participanteModel;
+    private  static  ICRUD <Entrenador>      entrenadorModel;
+    private  static  ICRUD <Grupo>           grupoModel;
+    private  static  ICRUD <Taller>          tallerModel;
+    private  static  ICRUD <Ciclo>           cicloModel;
+    private  static  String layout;
+
     public static void main(String[] args) {
         Spark.staticFileLocation("/templates");
         layout = "templates/layout.vtl";
@@ -33,12 +33,13 @@ public class Controller {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-            //entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
-            // Iterator <Entrenador> iterator = entrenadorModel.getElements().iterator();
-            // while(iterator.hasNext())
-            // {
-            //     System.out.println(iterator.next().getNombre());
-            //  }
+            /*entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
+            Iterator<Entrenador> iterator;
+            iterator = entrenadorModel.getElements().iterator();
+            while(iterator.hasNext())
+            {
+                 System.out.println(iterator.next().getNombre());
+             }*/
             //grupoModel = new GrupoModel<>(5432, "1234", "Acreser", "postgres");
             //Taller(String nombre, String descripcion, String codigo)
 
@@ -89,6 +90,7 @@ public class Controller {
         }, new VelocityTemplateEngine());
 
         post("/gettingParticipants", (request, response) -> {
+            participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
             response.type("text/html");
             HashMap model = new HashMap();
             String nombres = request.queryParams("nombre");
@@ -161,6 +163,7 @@ public class Controller {
             response.type("text/html");
             HashMap model = new HashMap();
 
+
             model.put("template", "templates/registrarTaller.html");
             return new ModelAndView(model, "templates/registrarTaller.html");
         }, new VelocityTemplateEngine());
@@ -191,7 +194,11 @@ public class Controller {
             response.type("text/html");
             HashMap model = new HashMap();
 
-            model.put("template", "templates/registrarGrupo.html");
+
+             entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
+             ArrayList<Entrenador> entrenadores = entrenadorModel.getElements();
+             model.put("entrenadores", entrenadores);
+             model.put("template", "templates/registrarGrupo.html");
             return new ModelAndView(model, "templates/registrarGrupo.html");
         }, new VelocityTemplateEngine());
 
@@ -211,7 +218,6 @@ public class Controller {
             String fechaPago2 = request.queryParams("fecha2");
             String fechaPago3= request.queryParams("fecha3");
 
-            // Grupo(String codigo, String nombre, Date fechaInicio, Date fechaFin, Taller tipo,  String codigoEntrenador, Integer cupo, Float precio, Date fechaDePago1, Date fechaDePago2, Date fechaDePago3) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date1 = formatter.parse(fechaPago1);
             Date date2 = formatter.parse(fechaPago2);
@@ -219,7 +225,9 @@ public class Controller {
             Date fechaIni = formatter.parse(fechaInicio);
             Date fechafin = formatter.parse(fechaFin);
 
-            if (grupoModel.insert(new Grupo(null, nombre, fechaIni, fechafin, new Taller(nombre, null, null, null), entrenador, Integer.parseInt(cupo), Float.parseFloat(costo), date1, date2, date3 ))){
+
+            if (grupoModel.insert(new Grupo(null, nombre, fechaIni, fechafin, new Taller(tipo, null, null, null), entrenador, Integer.parseInt(cupo), Float.parseFloat(costo), date1, date2, date3 ))){
+
                 model.put("name", " El grupo: " + nombre);
                 model.put("template", "templates/Successful.vtl");
                 return new ModelAndView(model, layout);
@@ -229,7 +237,6 @@ public class Controller {
                 model.put("template", "templates/Error.vtl");
                 return new ModelAndView(model, layout);
             }
-
         }, new VelocityTemplateEngine());
 //****************************************************************************************************************************************
         get("/registrarPrograma", (request, response) -> {
@@ -243,6 +250,7 @@ public class Controller {
 
         post("/registrarPrograma", (request, response) -> {
             response.type("text/html");
+            cicloModel = new CicloModel<>(5432, "1234", "Acreser", "postgres");
             HashMap model = new HashMap();
             String nombre = request.queryParams("nombre");
             String fechaInicio = request.queryParams("fechaInicio");
@@ -250,28 +258,28 @@ public class Controller {
             String tipo = request.queryParams("tipo");
             String talleres = request.queryParams("talleres");
 
-
             TipoCiclo tipoCiclo;
             if (tipo == "Adultos") {
                 tipoCiclo = TipoCiclo.ADULTOS;
             } else {
                 tipoCiclo = TipoCiclo.JOVENES;
             }
-            try {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date fechaini = formatter.parse(fechaInicio);
-                Date fechfin = formatter.parse(fechaFin);
-                cicloModel = new CicloModel<>(5432, "1234", "Acreser", "postgres");
 
-                System.out.println(cicloModel.insert(new Ciclo(nombre, null, fechaini, fechfin, tipoCiclo, new Taller(talleres, null, null, null))));
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaini = formatter.parse(fechaInicio);
+            Date fechafin = formatter.parse(fechaFin);
 
-            } catch (Exception ex) {
-                System.out.println("Failed!");
-                System.out.println(ex.getMessage());
+            if (cicloModel.insert(new Ciclo(nombre, null, fechafin, fechaini, tipoCiclo, new Taller(talleres, null, null, null)))){
+
+                model.put("name", " El Taller: " + nombre);
+                model.put("template", "templates/Successful.vtl");
+                return new ModelAndView(model, layout);
+            } else{
+                response.status(404);
+                model.put("error", "hubo un error al registrar el Grupo!!!");
+                model.put("template", "templates/Error.vtl");
+                return new ModelAndView(model, layout);
             }
-
-            System.out.println("Programa " + nombre + "  " + fechaInicio + " " + fechaFin + " " + tipo + " " + talleres);
-            return new ModelAndView(model, "templates/registrarPrograma.html");
         }, new VelocityTemplateEngine());
 //*****************************************************************************************************************************************
     }

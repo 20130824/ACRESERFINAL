@@ -48,7 +48,7 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
             resultSet= psmt1.getResultSet();
 
             psmt.setString(1, entity.getParticipanteID()); // need the field of the participante  -- participanteId
-            psmt.setString(2, entity.getTipoVoluntario().name());
+            psmt.setString(2, entity.getTipoVoluntario());
             psmt.setDate(3, new java.sql.Date(entity.getFechaInicio().getTime()));
 
 
@@ -103,7 +103,7 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
             while(resultSet.next()) {
                   voluntario = new Voluntario(
                         resultSet.getString("participanteid"),
-                        Voluntario.Volunteers.valueOf(resultSet.getString("tipovoluntarioid")),
+                          resultSet.getString("tipovoluntarioid"),
                           new java.util.Date(resultSet.getDate("fechaincio").getTime()),
                           resultSet.getString("codigo")
                   );
@@ -145,7 +145,7 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
             psmt = Conn.prepareStatement(updateQuery);
 
             psmt.setString(1, entity.getParticipanteID());
-            psmt.setString(2, entity.getTipoVoluntario().name());
+            psmt.setString(2, entity.getTipoVoluntario());
             psmt.setDate(3, new java.sql.Date(entity.getFechaInicio().getTime()));
             psmt.setString(4, entity.getCodigo());
 
@@ -188,7 +188,7 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
             if(resultSet.next()) {
                 voluntario = new Voluntario(
                         resultSet.getString("participanteid"),
-                        Voluntario.Volunteers.valueOf(resultSet.getString("tipovoluntarioid")),
+                        resultSet.getString("tipovoluntarioid"),
                         new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                         resultSet.getString("codigo")
                 );
