@@ -5,15 +5,26 @@
  */
 
 import spark.ModelAndView;
+import spark.Request;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+
 
 
 import static spark.Spark.*;
@@ -27,6 +38,11 @@ public class Controller {
     public  static  ICRUD <Ciclo>           cicloModel;
     public  static String layout;
     public static void main(String[] args) {
+
+        File uploadDir = new File("upload");
+        uploadDir.mkdir(); // create the upload directory if it doesn't exist
+
+        staticFiles.externalLocation("upload");
         Spark.staticFileLocation("/templates");
         layout = "templates/layout.vtl";
         try {
@@ -274,5 +290,119 @@ public class Controller {
             return new ModelAndView(model, "templates/registrarPrograma.html");
         }, new VelocityTemplateEngine());
 //*****************************************************************************************************************************************
+        get("/realizarPago", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            model.put("template", "templates/realizarPago.html");
+            return new ModelAndView(model, "templates/realizarPago.html");
+        }, new VelocityTemplateEngine());
+
+
+        post("/realizarPago", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+            String participante = request.queryParams("participante");
+            String monto = request.queryParams("monto");
+            String fechaPago = request.queryParams("fechaPago");
+            String fechaProxPago = request.queryParams("fechaProxPago");
+            String balance = request.queryParams("balance");
+
+
+            System.out.println(participante + "  " + monto + " " + fechaPago + " " + fechaProxPago + " " + balance);
+            return new ModelAndView(model, "templates/realizarPago.html");
+
+        }, new VelocityTemplateEngine());
+//****************************************************************************************************************************************8
+
+        get("/registrarVoluntario", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            model.put("template", "templates/registrarVoluntario.html");
+            return new ModelAndView(model, "templates/registrarVoluntario.html");
+        }, new VelocityTemplateEngine());
+
+
+        post("/registrarVoluntario", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+                String Participante = request.queryParams("participante");
+                String Funcion = request.queryParams("funcion");
+                String FechaRealizacion = request.queryParams("fechaRealizado");
+                String observaciones = request.queryParams("observaciones");
+
+            System.out.println(Participante + "  " + Funcion + " " + FechaRealizacion + " " + observaciones);
+            return new ModelAndView(model, "templates/registrarVoluntario.html");
+
+        }, new VelocityTemplateEngine());
+//****************************************************************************************************************************************8
+
+        get("/enviarMaterial", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            model.put("template", "templates/enviarMaterial.html");
+            return new ModelAndView(model, "templates/enviarMaterial.html");
+        }, new VelocityTemplateEngine());
+
+
+        post("/enviarMaterial", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+            String grupo = request.queryParams("grupo");
+            String archivo = request.queryParams("archivo");
+
+
+            System.out.println(grupo + "  " + archivo);
+            return new ModelAndView(model, "templates/enviarMaterial.html");
+
+        }, new VelocityTemplateEngine());
+//****************************************************************************************************************************************8
+
+        get("/enviarPromocion", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            model.put("template", "templates/enviarPromocion.html");
+            return new ModelAndView(model, "templates/enviarPromocion.html");
+        }, new VelocityTemplateEngine());
+
+
+        post("/enviarPromocion", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+
+            request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+
+            try (InputStream input = request.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
+                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            System.out.println(tempFile.getFileName());
+            logInfo(request, tempFile);
+            return new ModelAndView(model, "templates/enviarPromocion.html");
+
+        }, new VelocityTemplateEngine());
+
     }
+
+    // methods used for logging
+    private static void logInfo(Request req, Path tempFile) throws IOException, ServletException {
+        System.out.println("Uploaded file '" + getFileName(req.raw().getPart("file")) + "' saved as '" + tempFile.toAbsolutePath() + "'");
+    }
+
+    private static String getFileName(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
+
 }
+

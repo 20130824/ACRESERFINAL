@@ -101,12 +101,12 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   
   <div class="col-md-4 col-md-offset-4">
   <h1>Registrar Voluntario:</h1>
-  <form>
+    <form method='post' action='/registrarVoluntario'>
   
   
 <div class="form-group">
      <label>Participante:</label>
-     <select class="selectpicker" data-live-search="true" required="required">
+     <select class="selectpicker" name="participante" data-live-search="true" required="required">
   <option >Fula>
   <option >Mengano</option>
   <option >Perencejo</option>
@@ -115,7 +115,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 
  <div class="form-group">
      <label>Funcion:</label>
-     <select class="selectpicker" multiple data-actions-box="true">
+     <select class="selectpicker" name="funcion" multiple data-actions-box="true">
   <option >Fulano</option>
   <option >Mengano</option>
   <option >Perencejo</option>
@@ -124,12 +124,12 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 
 <div class="form-group">
 <label>Fecha de realización:</label>
-<input type="date" id="fechaRealizado" name="fechaPago" size="20" class="form-control" required="required"/>
+<input type="date" id="fechaRealizado" name="fechaRealizado" size="20" class="form-control" required="required"/>
 </div>
 
 <div class="form-group">
 <label>Observaciones:</label>
-<textarea class="form-control"></textarea>
+<textarea name="observaciones" class="form-control"></textarea>
 </div>
 
   <div class="form-group">
