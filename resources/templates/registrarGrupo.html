@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -122,22 +123,22 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   <form method='post' action='/registrarGrupo' style="padding-bottom:20px">
   <div class="form-group">
   <label>Nombre:</label>
-  <input name="nombre" type="text" class="form-control" >
+  <input name="nombre" type="text" class="form-control" placeholder="Nombres()" required="required" >
   </div> 
  
  <div class="form-group">
  <label>Fecha de Inicio:</label>
-   <input type="date" id="fechaInicio" name="fechaInicio" size="20" class="form-control" />
+   <input type="date" id="fechaInicio" name="fechaInicio" placeholder="Fecha inicio" size="20" class="form-control" required="required" />
  </div>
  
  <div class="form-group">
  <label>Fecha de Fin:</label>
-   <input type="date" id="fechaFin" name="fechaFin" size="20" class="form-control" />
+   <input type="date" id="fechaFin" name="fechaFin" placeholder="Fecha fin" size="20" class="form-control" required="required"/>
  </div>
  
  <div class="form-group">
  <label>Tipo:</label>
- <select id="selectorTaller" name="tipo" class="form-control">
+ <select id="selectorTaller" name="tipo" required="required" class="form-control">
      <option value="1">Discovery</option>
      <option value="1">Intensive</option>
      <option value="3">LP</option>
@@ -146,7 +147,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 <div class="form-group">
 
     <div id="1" class="fechas" style="display:none">
-        <h3>Fecha  de pago: </h3>
+        <h3>Fecha de pago: </h3>
         <div class="form-group">
             <label>Fecha 1</label>
         <input type="date" id="fecha0" name="fecha0" size="20" class="form-control" />
@@ -171,18 +172,18 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 
  <div class="form-group">
  <label>Entrenador:</label>
- <select name="entrenador" class="form-control"></select>
+ <select name="entrenador" class="form-control"  required="required"></select>
  </div>
     
   
   	 <div class ="form-group">
     <label>Cupo:</label>
-    <input name="cupo" type="number" class="form-control">
+    <input name="cupo" type="number" class="form-control" placeholder="Cant. Max participantes" required="required">
     </div>
     
     <div class ="form-group">
     <label>Costo:</label>
-    <input name="costo" type="number" class="form-control">
+    <input name="costo" type="number" placeholder="Costo" class="form-control" required="required">
     </div>
      <div class="form-group">
     <input type="submit" id="btnSubmit" class="form-control">
