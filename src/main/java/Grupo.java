@@ -18,12 +18,12 @@ public class Grupo {
     private  String CodigoEntrenador;
     private  Integer Cupo;
     private  Float Precio;
-    private  String grupo;
+
     private  Date FechaDePago1;
     private  Date FechaDePago2;
     private  Date FechaDePago3;
 
-    public Grupo(String codigo, String nombre, Date fechaInicio, Date fechaFin, Taller tipo, String Grupo, String codigoEntrenador, Integer cupo, Float precio, Date fechaDePago1, Date fechaDePago2, Date fechaDePago3) {
+    public Grupo(String codigo, String nombre, Date fechaInicio, Date fechaFin, Taller tipo, String codigoEntrenador, Integer cupo, Float precio, Date fechaDePago1, Date fechaDePago2, Date fechaDePago3) {
         Codigo = codigo;
         Nombre = nombre;
         FechaInicio = fechaInicio;
@@ -32,7 +32,6 @@ public class Grupo {
         CodigoEntrenador = codigoEntrenador;
         Cupo = cupo;
         Precio = precio;
-        grupo = Grupo;
         FechaDePago1= fechaDePago1;
         FechaDePago2= fechaDePago2;
         FechaDePago3= fechaDePago3;
@@ -103,13 +102,6 @@ public class Grupo {
 
     public void setPrecio(Float precio) {
         Precio = precio;
-    }
-    public String getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
     }
 
 

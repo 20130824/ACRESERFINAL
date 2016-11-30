@@ -79,7 +79,7 @@ public class Controller {
             model.put("template", "templates/Inscripciones.html");
             return new ModelAndView(model, "templates/Inscripciones.html");
         }, new VelocityTemplateEngine());
-
+//**************************************************************************************************************************************
         get("/registrarParticipantes", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
@@ -105,23 +105,18 @@ public class Controller {
 
             System.out.println(nombres + "  " + apellidos + " " + fecha + "  " + cedula + "  " + sexo + "  " + telcel + "  " + telRes);
             if (participanteModel.insert(new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes, 0))) {
-                model.put("name", "Participante " + nombres);
-                model.put("nombre", "Nombre");
-                model.put("apellido", "Apellido");
-                model.put("cedula", "Cedula");
-                model.put("email", "Email");
-                model.put("participantes", participanteModel.getElements() );
+                model.put("name", " El participante:  " + nombres);
                 model.put("template", "templates/Successful.vtl");
                 return new ModelAndView(model, layout);
-            } else {
+            }else {
                 response.status(404);
-                model.put("error", "Error Registering the participants!!");
+                model.put("error", "Hubo un error al registrar el participante!!!");
                 model.put("template", "templates/Error.vtl");
                 return new ModelAndView(model, layout);
             }
         }, new VelocityTemplateEngine());
 
-
+//*****************************************************************************************************************************************
         get("/registrarEntrenadores", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
@@ -133,6 +128,7 @@ public class Controller {
 
         post("/registrarEntrenadores", (request, response) -> {
             response.type("text/html");
+            entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
             HashMap modelEntrenadores = new HashMap();
             String nombres = request.queryParams("nombres");
             String apellidos = request.queryParams("apellidos");
@@ -142,22 +138,25 @@ public class Controller {
             String sexo = request.queryParams("Sexo");
             String fecha = request.queryParams("birthday");
             String email = request.queryParams("email");
-            try {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = formatter.parse(fecha);
 
-                entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
-                System.out.println(entrenadorModel.insert(new Entrenador(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes)));
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatter.parse(fecha);
 
-            } catch (Exception ex) {
-                System.out.println("Failed!");
-                System.out.println(ex.getMessage());
-            }
             System.out.println(nombres + "  " + apellidos + " " + fecha + "  " + cedula + "  " + sexo + "  " + telcel + "  " + telRes);
-            return new ModelAndView(modelEntrenadores, "templates/registrarEntrenadores.html");
+
+            if (entrenadorModel.insert(new Entrenador(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes))) {
+                modelEntrenadores.put("name", " El entrenador:  " + nombres);
+                modelEntrenadores.put("template", "templates/Successful.vtl");
+                return new ModelAndView(modelEntrenadores, layout);
+            } else{
+                response.status(404);
+                modelEntrenadores.put("error", "Hubo un error al registrar el Entrenador!!!");
+                modelEntrenadores.put("template", "templates/Error.vtl");
+                return new ModelAndView(modelEntrenadores, layout);
+            }
         }, new VelocityTemplateEngine());
 
-
+//****************************************************************************************************************************************
         get("/registrarTaller", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
@@ -169,25 +168,25 @@ public class Controller {
 
         post("/registrarTaller", (request, response) -> {
             response.type("text/html");
+            tallerModel = new TallerModel<>(5432, "1234", "Acreser", "postgres");
             HashMap model = new HashMap();
             String nombre = request.queryParams("nombre");
             String prerequisito = request.queryParams("prerequisito");
             String descripcion = request.queryParams("descripcion");
 
-            try {
-
-                tallerModel = new TallerModel<>(5432, "1234", "Acreser", "postgres");
-                System.out.println(tallerModel.insert(new Taller(nombre, descripcion, null, prerequisito)));
-
-            } catch (Exception ex) {
-                System.out.println("Failed!");
-                System.out.println(ex.getMessage());
-            }
-
             System.out.println(nombre + "  " + prerequisito + " " + descripcion);
-            return new ModelAndView(model, "templates/registrarTaller.html");
+            if (tallerModel.insert(new Taller(nombre, descripcion, null, prerequisito))) {
+                model.put("name", " El Taller:  " + nombre);
+                model.put("template", "templates/Successful.vtl");
+                return new ModelAndView(model, layout);
+            } else{
+                response.status(404);
+                model.put("error", "Hubo un error al registrar el taller!!!!");
+                model.put("template", "templates/Error.vtl");
+                return new ModelAndView(model, layout);
+            }
         }, new VelocityTemplateEngine());
-
+//****************************************************************************************************************************************8
          get("/registrarGrupo", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
@@ -199,20 +198,40 @@ public class Controller {
 
         post("/registrarGrupo", (request, response) -> {
             response.type("text/html");
+            grupoModel   = new GrupoModel<>(5432, "1234", "Acreser", "postgres");
             HashMap model = new HashMap();
             String nombre = request.queryParams("nombre");
             String fechaInicio = request.queryParams("fechaInicio");
             String fechaFin = request.queryParams("fechaFin");
             String tipo = request.queryParams("tipo");
-            String Entrenador = request.queryParams("entrenador");
+            String entrenador = request.queryParams("entrenador");
             String cupo = request.queryParams("cupo");
             String costo = request.queryParams("costo");
+            String fechaPago1 = request.queryParams("fecha1");
+            String fechaPago2 = request.queryParams("fecha2");
+            String fechaPago3= request.queryParams("fecha3");
 
+            // Grupo(String codigo, String nombre, Date fechaInicio, Date fechaFin, Taller tipo,  String codigoEntrenador, Integer cupo, Float precio, Date fechaDePago1, Date fechaDePago2, Date fechaDePago3) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date1 = formatter.parse(fechaPago1);
+            Date date2 = formatter.parse(fechaPago2);
+            Date date3 = formatter.parse(fechaPago3);
+            Date fechaIni = formatter.parse(fechaInicio);
+            Date fechafin = formatter.parse(fechaFin);
 
-            System.out.println("Grupo " + nombre + "  " + fechaInicio + " " + fechaFin + " " + tipo + " " + Entrenador + " " + cupo + " " + costo);
-            return new ModelAndView(model, "templates/registrarGrupo.html");
+            if (grupoModel.insert(new Grupo(null, nombre, fechaIni, fechafin, new Taller(nombre, null, null, null), entrenador, Integer.parseInt(cupo), Float.parseFloat(costo), date1, date2, date3 ))){
+                model.put("name", " El grupo: " + nombre);
+                model.put("template", "templates/Successful.vtl");
+                return new ModelAndView(model, layout);
+            } else{
+                response.status(404);
+                model.put("error", "hubo un error al registrar el Grupo!!!");
+                model.put("template", "templates/Error.vtl");
+                return new ModelAndView(model, layout);
+            }
+
         }, new VelocityTemplateEngine());
-
+//****************************************************************************************************************************************
         get("/registrarPrograma", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
@@ -254,6 +273,6 @@ public class Controller {
             System.out.println("Programa " + nombre + "  " + fechaInicio + " " + fechaFin + " " + tipo + " " + talleres);
             return new ModelAndView(model, "templates/registrarPrograma.html");
         }, new VelocityTemplateEngine());
-
+//*****************************************************************************************************************************************
     }
 }
