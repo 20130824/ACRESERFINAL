@@ -113,12 +113,16 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
  
  <div class="form-group">
  <label>Pre-requisito:</label>
- <select name="prerequisito" class="form-control" required></select>
+ <select name="prerequisito" class="form-control" required>
+     <option value="" SELECTED disabled> Nothing Selected</option>>
+     <option value="1"> Discovery</option>
+     <option value="2"> Intensive</option>
+ </select>
  </div>
     
     <div class="form-group">
     <label>Descripcion</label>
-    <textarea name="descripcion" class="form-control"></textarea>
+    <textarea name="descripcion" class="form-control" required></textarea>
     </div>
     <div class="form-group">
     <input type="submit" id="btnSubmit" class="form-control">
