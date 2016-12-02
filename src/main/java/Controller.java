@@ -373,7 +373,7 @@ public class Controller {
             response.type("text/html");
             HashMap model = new HashMap();
 
-            Path tempFile = Files.createTempFile(uploadDir.toPath(), "file", ".png");
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), "file ", ".png");
 
             request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 
