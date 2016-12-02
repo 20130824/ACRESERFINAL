@@ -8,6 +8,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
+import spark.utils.IOUtils;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -15,16 +16,14 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-
+import java.util.*;
 
 
 import static spark.Spark.*;
@@ -370,15 +369,16 @@ public class Controller {
         }, new VelocityTemplateEngine());
 
 
-        post("/enviarPromocion", (request, response) -> {
+        post("/enviarPromocion", "multipart/form-data", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
 
-            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), "file", ".png");
 
             request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 
             try (InputStream input = request.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
+
                 Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
             }
 
@@ -387,7 +387,6 @@ public class Controller {
             return new ModelAndView(model, "templates/enviarPromocion.html");
 
         }, new VelocityTemplateEngine());
-
     }
 
     // methods used for logging
