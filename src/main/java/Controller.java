@@ -381,6 +381,7 @@ public class Controller {
 
             Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
             request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            String grupo = request.raw().getParameter("grupo");
             String asunto = request.raw().getParameter("asunto");
             try (InputStream input = request.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
 
