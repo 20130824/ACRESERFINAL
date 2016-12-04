@@ -193,7 +193,7 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
 
             }
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()) ;
 
             try {
                 if(null != psmt) {
