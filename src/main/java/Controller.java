@@ -366,10 +366,7 @@ public class Controller {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date1 = formatter.parse(FechaRealizacion);
 
-            String Participante = request.queryParams("participante");
-            String Funcion = request.queryParams("funcion");
-            String FechaRealizacion = request.queryParams("fechaRealizado");
-            String observaciones = request.queryParams("observaciones");
+
 
 
              if (voluntarioModel.insert(new Voluntario(st[1], Funcion, date1, null))){
