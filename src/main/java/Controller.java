@@ -421,8 +421,8 @@ public class Controller {
 
 
             System.out.println(tempFile.getFileName());
-            enviarCorreo("isaacenmanuel28@gmail.com", "info@acreser.net", "info1234", tempFile.toAbsolutePath().toString(), asunto );
-
+            //enviarCorreo("isaacenmanuel28@gmail.com", "info@acreser.net", "info1234", tempFile.toAbsolutePath().toString(), asunto );
+            notificarAdeudados("isaacenmanuel28@gmail.com", "info@acreser.net", "info1234", asunto, "Isaac Perez","2013" ,"1500", "28-112016" );
             logInfo(request, tempFile);
             return new ModelAndView(model, "templates/enviarPromocion.html");
 
@@ -528,9 +528,9 @@ public class Controller {
 
             //3) create MimeBodyPart object and set your message text
             BodyPart messageBodyPart1 = new MimeBodyPart();
-            messageBodyPart1.setText("Usted: " + nombre +" tiene un pago pendiente a la suma de: " + monto +" pesos correspondientes al pago de su taller. Dicho pago debio ser realizado en la fecha: " + fecha +
-                    ". Le pedimos que por favor se ponga al dia con el los pagos" +
-                    "Cordialmente se despide: EL equipo administrativo de ACRESER."
+            messageBodyPart1.setText("Usted: " + nombre +" tiene un pago pendiente por la suma de: " + monto +" pesos dominicanos, correspondientes al pago de su taller. Dicho pago debió ser realizado en la fecha: " + fecha +
+                    ". Le pedimos que por favor se ponga al día con el pago." +
+                    " Cordialmente se despide: El equipo administrativo de ACRESER."
 
             );
 
