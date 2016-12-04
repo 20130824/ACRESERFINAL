@@ -106,13 +106,13 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   
 <div class="form-group">
      <label>Participante:</label>
-     <select class="selectpicker" data-live-search="true" name="participante" required="required">
-       <option value="" selected disabled>Nothing Selected</option>
-       #set($i=1)
-       #foreach ($participante in $participantes)
-       <option>$participante.getNombre() ; $participante.getMatricula()</option>
-       #set($i = $i+ 1)
-       #end
+         <select class="selectpicker" data-live-search="true" name="participante" required="required">
+             <option value="" selected disabled>Nothing Selected</option>
+             #set($i=1)
+             #foreach ($participante in $participantes)
+             <option>$participante.getNombre() ; $participante.getMatricula()</option>
+             #set($i = $i+ 1)
+             #end
 </select>
 </div>
 
