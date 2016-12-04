@@ -8,25 +8,28 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
-import spark.utils.IOUtils;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Properties;
 
 import static spark.Spark.*;
 
@@ -316,6 +319,29 @@ public class Controller {
         }, new VelocityTemplateEngine());
 //****************************************************************************************************************************************8
 
+        get("/tipoVoluntario", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            model.put("template", "templates/tipoVoluntario.html");
+            return new ModelAndView(model, "templates/tipoVoluntario.html");
+        }, new VelocityTemplateEngine());
+
+
+        post("/tipoVoluntario", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+               String nombre = request.queryParams("nombre");
+               String descripcion = request.queryParams("descripcion");
+
+            System.out.println(nombre + "  " + descripcion );
+            return new ModelAndView(model, "templates/tiporVoluntario.html");
+
+        }, new VelocityTemplateEngine());
+//****************************************************************************************************************************************8
+
+
         get("/registrarVoluntario", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
@@ -329,10 +355,10 @@ public class Controller {
             response.type("text/html");
             HashMap model = new HashMap();
 
-                String Participante = request.queryParams("participante");
-                String Funcion = request.queryParams("funcion");
-                String FechaRealizacion = request.queryParams("fechaRealizado");
-                String observaciones = request.queryParams("observaciones");
+            String Participante = request.queryParams("participante");
+            String Funcion = request.queryParams("funcion");
+            String FechaRealizacion = request.queryParams("fechaRealizado");
+            String observaciones = request.queryParams("observaciones");
 
             System.out.println(Participante + "  " + Funcion + " " + FechaRealizacion + " " + observaciones);
             return new ModelAndView(model, "templates/registrarVoluntario.html");
@@ -349,14 +375,23 @@ public class Controller {
         }, new VelocityTemplateEngine());
 
 
-        post("/enviarMaterial", (request, response) -> {
+        post("/enviarMaterial", "multipart/form-data", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
-            String grupo = request.queryParams("grupo");
-            String archivo = request.queryParams("archivo");
+
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
+            request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            String asunto = request.raw().getParameter("asunto");
+            try (InputStream input = request.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
+
+                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            }
 
 
-            System.out.println(grupo + "  " + archivo);
+            System.out.println(tempFile.getFileName());
+            enviarCorreo("isaacenmanuel28@gmail.com", "info@acreser.net", "info1234", tempFile.toAbsolutePath().toString(), asunto );
+
+            logInfo(request, tempFile);
             return new ModelAndView(model, "templates/enviarMaterial.html");
 
         }, new VelocityTemplateEngine());
@@ -376,9 +411,8 @@ public class Controller {
             HashMap model = new HashMap();
 
             Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
-
             request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-
+            String asunto = request.raw().getParameter("asunto");
             try (InputStream input = request.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
 
                 Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
@@ -386,7 +420,7 @@ public class Controller {
 
 
             System.out.println(tempFile.getFileName());
-            enviarCorreo("isaacenmanuel28@gmail.com", "info@acreser", "Naranja1234", tempFile.toAbsolutePath().toString( ) );
+            enviarCorreo("isaacenmanuel28@gmail.com", "info@acreser.net", "info1234", tempFile.toAbsolutePath().toString(), asunto );
 
             logInfo(request, tempFile);
             return new ModelAndView(model, "templates/enviarPromocion.html");
@@ -408,36 +442,47 @@ public class Controller {
         return null;
     }
 
-    private static void enviarCorreo(String destino, String usuario, String clave, String attachment){
+    private static void enviarCorreo(String destino, String usuario, String clave, String attachment, String Asunto){
 
-        Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", "mail.javatpoint.com");
-        properties.put("mail.smtp.auth", "true");
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "mail.acreser.net");
+        props.put("mail.smtp.port", "587");
 
-        Session session = Session.getDefaultInstance(properties,
+        Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(usuario,clave);
+                        return new PasswordAuthentication(usuario, clave);
                     }
                 });
 
-        //2) compose message
-        try{
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(usuario));
-            message.addRecipient(Message.RecipientType.TO,new InternetAddress(destino));
-            message.setSubject("Message Aleart");
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("info@acreser.net"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(destino));
+            message.setSubject(Asunto);
 
             //3) create MimeBodyPart object and set your message text
             BodyPart messageBodyPart1 = new MimeBodyPart();
-            messageBodyPart1.setText("This is message body");
+            messageBodyPart1.setText("ACRESER\n" +
+                    "Carretera Las Palomas\n" +
+                    "#60, entrando frente a Leche Rica Santigo, Rep.Dom.\n" +
+                    "Tel: (809)-489-2189\n" +
+                    "Cel: (829)-649-5841\n" +
+                    "Email: info@acreser.net ");
+
+
 
             //4) create new MimeBodyPart object and set DataHandler object to this object
             MimeBodyPart messageBodyPart2 = new MimeBodyPart();
 
+            String filename = "SendAttachment.java";//change accordingly
             DataSource source = new FileDataSource(attachment);
             messageBodyPart2.setDataHandler(new DataHandler(source));
-            messageBodyPart2.setFileName(attachment);
+            messageBodyPart2.setFileName(filename);
 
 
             //5) create Multipart object and add MimeBodyPart objects to this object
@@ -448,14 +493,70 @@ public class Controller {
             //6) set the multiplart object to the message object
             message.setContent(multipart );
 
-            //7) send message
             Transport.send(message);
 
-            System.out.println("message sent....");
-        }catch (MessagingException ex) {ex.printStackTrace();}
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-}
+    private static void notificarAdeudados(String destino, String usuario, String clave, String Asunto, String nombre, String matricula, String monto, String fecha){
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "mail.acreser.net");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(usuario, clave);
+                    }
+                });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("info@acreser.net"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(destino));
+            message.setSubject(Asunto);
+
+            //3) create MimeBodyPart object and set your message text
+            BodyPart messageBodyPart1 = new MimeBodyPart();
+            messageBodyPart1.setText("Usted: " + nombre +" tiene un pago pendiente a la suma de: " + monto +" pesos correspondientes al pago de su taller. Dicho pago debio ser realizado en la fecha: " + fecha +
+                    ". Le pedimos que por favor se ponga al dia con el los pagos" +
+                    "Cordialmente se despide: EL equipo administrativo de ACRESER."
+
+            );
+
+
+            //5) create Multipart object and add MimeBodyPart objects to this object
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart1);
+
+            //6) set the multiplart object to the message object
+            message.setContent(multipart );
+
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
+    }
+
+
 
 
 

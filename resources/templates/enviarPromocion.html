@@ -88,9 +88,14 @@
     
         <div class="container kv-main">
             <h3>Enviar Promocion:</h3>
+            <p>Esta herramienta sirve para enviar promociones via correo electronico</p>
             <form method='post' action='/enviarPromocion' enctype="multipart/form-data">
 
-                <input type="text" name="title"><br>
+                <div class="form-group">
+                    <label>Asunto del Correo</label>
+                    <input type="text" class="form-control" name="asunto"><br>
+                </div>
+
 
             	<label class="control-label">Seleccionar Archivo</label>              
                  

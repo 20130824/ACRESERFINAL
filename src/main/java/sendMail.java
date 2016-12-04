@@ -1,59 +1,49 @@
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import java.util.Properties;
 
-class SendAttachment{
-    public static void main(String [] args){
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-        String to="sonoojaiswal1987@gmail.com";//change accordingly
-        final String user="sonoojaiswal@javatpoint.com";//change accordingly
-        final String password="xxxxx";//change accordingly
+public class sendMail {
 
-        //1) get the session object
-        Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", "mail.javatpoint.com");
-        properties.put("mail.smtp.auth", "true");
+    public static void main(String[] args) {
 
-        Session session = Session.getDefaultInstance(properties,
+        final String username = "info@acreser.net";
+        final String password = "info1234";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "mail.acreser.net");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(user,password);
+                        return new PasswordAuthentication(username, password);
                     }
                 });
 
-        //2) compose message
-        try{
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(user));
-            message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-            message.setSubject("Message Aleart");
+        try {
 
-            //3) create MimeBodyPart object and set your message text
-            BodyPart messageBodyPart1 = new MimeBodyPart();
-            messageBodyPart1.setText("This is message body");
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("info@acreser.net"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse("isaacenmanuel28@gmail.com"));
+            message.setSubject("Testing Subject");
+            message.setText("Dear Mail Crawler,"
+                    + "\n\n No spam to my email, please!");
 
-            //4) create new MimeBodyPart object and set DataHandler object to this object
-            MimeBodyPart messageBodyPart2 = new MimeBodyPart();
-
-            String filename = "SendAttachment.java";//change accordingly
-            DataSource source = new FileDataSource(filename);
-            messageBodyPart2.setDataHandler(new DataHandler(source));
-            messageBodyPart2.setFileName(filename);
-
-
-            //5) create Multipart object and add MimeBodyPart objects to this object
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart1);
-            multipart.addBodyPart(messageBodyPart2);
-
-            //6) set the multiplart object to the message object
-            message.setContent(multipart );
-
-            //7) send message
             Transport.send(message);
 
-            System.out.println("message sent....");
-        }catch (MessagingException ex) {ex.printStackTrace();}
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
