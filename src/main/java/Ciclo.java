@@ -13,6 +13,7 @@ public class Ciclo {
 
 
 
+
     public Ciclo (String nombre, String codigo, Date fechaFin, Date fechaInicio, int tipoCiclo, Taller talleres ){
         this.Nombre = nombre;
         this.Codigo = codigo;
