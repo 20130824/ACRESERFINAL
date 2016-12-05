@@ -8,17 +8,18 @@ public class Ciclo {
     private String Codigo;
     private Date FechaInicio;
     private Date FechaFin;
-    private int Tipo; // Para arreglar
+    private int tipoCiclo;
     private  Taller talleres;
 
 
 
-    public Ciclo (String nombre, String codigo, Date fechaFin, Date fechaInicio, TipoCiclo tipoCiclo, Taller talleres ){
+
+    public Ciclo (String nombre, String codigo, Date fechaFin, Date fechaInicio, int tipoCiclo, Taller talleres ){
         this.Nombre = nombre;
         this.Codigo = codigo;
         this.FechaFin = fechaFin;
         this.FechaInicio = fechaInicio;
-        this.Tipo = tipoCiclo.getTipoCicloValue();
+        this.tipoCiclo = tipoCiclo;
 
     }
     public Taller getTalleres() {
@@ -29,11 +30,11 @@ public class Ciclo {
         this.talleres = talleres;
     }
     public int getTipo() {
-        return Tipo;
+        return tipoCiclo;
     }
 
     public void setTipo(int tipo) {
-        Tipo = tipo;
+        tipoCiclo = tipo;
     }
 
     public String getNombre() {

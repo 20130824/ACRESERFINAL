@@ -6,13 +6,11 @@ import java.util.Date;
 public class TipoVoluntario  {
     private String Nombre ;
     private String Descripcion;
-    private String CodigoTaller;
     private String Codigo;
 
-    public TipoVoluntario(String nombre, String Descripcion, String codigoTaller, String Codigo){
+    public TipoVoluntario(String nombre, String Descripcion,  String Codigo){
         this.Nombre = nombre;
         this.Descripcion = Descripcion;
-        this.CodigoTaller = codigoTaller;
         this.Codigo = Codigo;
     }
 
@@ -30,14 +28,6 @@ public class TipoVoluntario  {
 
     public void setDescripcion(String descripcion) {
         Descripcion = descripcion;
-    }
-
-    public String getCodigoTaller() {
-        return CodigoTaller;
-    }
-
-    public void setCodigoTaller(String codigoTaller) {
-        CodigoTaller = codigoTaller;
     }
 
     public String getCodigo() {

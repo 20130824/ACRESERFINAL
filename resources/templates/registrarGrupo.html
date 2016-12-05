@@ -179,7 +179,7 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
      <option value="" selected disabled>Nothing Selected</option>
      #set($i=1)
      #foreach ($entrenador in $entrenadores)
-     <option value=$i>$entrenador.getNombre()</option>
+     <option>$i: $entrenador.getNombre()  $entrenador.getApellidos()</option>
         #set($i = $i+ 1)
      #end
  </select>

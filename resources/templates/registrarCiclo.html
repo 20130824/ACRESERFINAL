@@ -108,10 +108,10 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   
   <div class="col-md-4 col-md-offset-4">
   <h3>Registrar Ciclo:</h3>
-  <form style="padding-bottom:20px">
+  <form style="padding-bottom:20px" method='post' action='/registrarPrograma'>
   <div class="form-group">
   <label>Nombre:</label>
-  <input type="text" class="form-control" placeholder="Nombre Ciclo" required="required">
+  <input type="text" name="nombre" class="form-control" placeholder="Nombre Ciclo" required="required">
   </div> 
  
  <div class="form-group">
@@ -126,12 +126,19 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
  
  <div class="form-group">
  <label>Tipo:</label>
- <select class="form-control">
+ <select class="form-control" id="tipo" name=" tipo" required>
      <option value="1">Adultos</option>
      <option value="2">Jovenes</option></select>
  </div>
- 
-  
+      <div class="form-group">
+          <label>Talleres:</label>
+          <select class="selectpicker" name="talleres"  multiple data-actions-box="true" required>
+              <option>Discovery</option>
+              <option>Intensive</option>
+              <option>LP</option>
+          </select>
+      </div>
+
      <div class="form-group">
     <input type="submit" id="btnSubmit" class="form-control">
     </div>

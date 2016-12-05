@@ -204,7 +204,7 @@ public class EntrenadorModel<T extends Entrenador> implements ICRUD<T> {
 
             if(resultSet.next()) {
 
-                char dato = resultSet.getString("sexo").charAt(0);
+
 
                 entrenador = new Entrenador(
                         resultSet.getString("nombres"),
