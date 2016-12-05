@@ -300,6 +300,7 @@ public class Controller {
             } else{
                 response.status(404);
                 model.put("error", "hubo un error al registrar el Grupo!!!");
+
                 return new ModelAndView(model, "templates/registrarPrograma.html" );
             }
         }, new VelocityTemplateEngine());
