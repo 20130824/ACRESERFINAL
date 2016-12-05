@@ -28,7 +28,6 @@ public class PagoModel <T extends  Pago> implements  ICRUD<T> {
 
     @Override
     public Boolean insert(T entity) {
-
         String sql = "insert into historialpagos(fechapagado, montopagado, participante, codigo_pago, grupo) Values (?, ?, ?, ?, ?);";
         String matricula =id.generateSessionKey(6);
         String sql2 = "Select codigo_pago from entrenadores where codigo_pago= ?";
@@ -145,6 +144,7 @@ public class PagoModel <T extends  Pago> implements  ICRUD<T> {
 
             psmt.close();
             Conn.close();
+
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
