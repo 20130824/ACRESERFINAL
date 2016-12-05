@@ -8,6 +8,8 @@
     <link href="css/botones.css" rel="stylesheet">
     <!-- Bootstrap -->
 	<link href="css/bootstrap.css" rel="stylesheet">
+      <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,7 +20,7 @@
   </head>
   <body style="padding-top: 70px">
  
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -40,6 +42,8 @@
 
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+                <li><a href="/consultarParticipantes">Consultar Participantes</a></li>
+                <li><a href="/consultarEntrenadores">Consultar Entrenadores</a></li>
               <li><a href="/enviarMaterial">Enviar Material a Grupos</a></li>
               <li><a href="/enviarPromocion">Enviar Promociones</a></li>
             </ul>
@@ -79,6 +83,46 @@
     </div>
     <!-- /.container-fluid -->
   </nav>
+
+
+      <p style="margin-top: 200px">
+      <div style="margin-left: 130px">
+      <div class="col-sm-6 col-md-3">
+          <a href="/registrarParticipante" class="btn btn-sq-lg btn-primary">
+              <br>
+              <i class="material-icons md-48">account_circle</i><br/>
+              Registrar  <br>
+              Participante
+          </a>
+      </div>
+      <div class="col-sm-6 col-md-3">
+          <a href="/enviarPromocion" class="btn btn-sq-lg btn-warning">
+              <br>
+              <i class="material-icons md-48">filter</i><br/>
+              Enviar  <br>
+              Promocion
+          </a>
+          </div>
+      <div class="col-sm-6 col-md-3">
+          <a href="/cuentasPorCobrar" class="btn btn-sq-lg btn-danger">
+              <br>
+              <i class="material-icons md-48">error</i><br/>
+              Pendientes  <br>
+              de Pago
+          </a>
+          </div>
+      <div class="col-sm-6 col-md-3">
+          <a href="/realizarPago" class="btn btn-sq-lg btn-success">
+              <br>
+              <i class="material-icons md-48">monetization_on</i><br/>
+              Realizar  <br>
+              Pago
+          </a>
+          </div>
+  </div>
+      </p>
+
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 	<script src="js/jquery-1.11.2.min.js"></script>
 
