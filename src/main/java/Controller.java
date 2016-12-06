@@ -236,13 +236,15 @@ public class Controller {
             String costo = request.queryParams("costo");
             String fechaPago1 = request.queryParams("fecha1");
             String fechaPago2 = request.queryParams("fecha2");
-            String fechaPago3= request.queryParams("fecha3");
+            String fechaPago3 = request.queryParams("fecha3");
 
-            // Grupo(String codigo, String nombre, Date fechaInicio, Date fechaFin, Taller tipo,  String codigoEntrenador, Integer cupo, Float precio, Date fechaDePago1, Date fechaDePago2, Date fechaDePago3) {
+
+
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date1 = formatter.parse(fechaPago1);
-            Date date2 = formatter.parse(fechaPago2);
-            Date date3 = formatter.parse(fechaPago3);
+           Date date1  = formatter.parse(fechaPago1);
+           Date date2 = formatter.parse(fechaPago2);
+           Date date3 = formatter.parse(fechaPago3);
+            // Grupo(String codigo, String nombre, Date fechaInicio, Date fechaFin, Taller tipo,  String codigoEntrenador, Integer cupo, Float precio, Date fechaDePago1, Date fechaDePago2, Date fechaDePago3) {
             Date fechaIni = formatter.parse(fechaInicio);
             Date fechafin = formatter.parse(fechaFin);
             String[] st = new String[2];
@@ -262,7 +264,7 @@ public class Controller {
             } else{
                 response.status(404);
                 model.put("error", "hubo un error al registrar el Grupo!!!");
-                return new ModelAndView(model, "templates/registrarGrupo.html" );
+                return new ModelAndView(model, "templates/registrarGrupo.html");
             }
 
         }, new VelocityTemplateEngine());
