@@ -416,7 +416,7 @@ public class Controller {
             response.type("text/html");
             HashMap model = new HashMap();
 
-            model.put("template", "templates/tipoVoluntario.html");
+                                                                  model.put("template", "templates/tipoVoluntario.html");
             return new ModelAndView(model, "templates/tipoVoluntario.html");
         }, new VelocityTemplateEngine());
 
