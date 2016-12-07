@@ -2,127 +2,134 @@
 <html>
 <head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Consultar Entrenadores</title>
-    <meta name="description" content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">  
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
-<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
+    <meta name="description"
+          content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
     <link href="css/botones.css" rel="stylesheet">
     <!-- Bootstrap -->
-	<link href="css/bootstrap.css" rel="stylesheet">
- 
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-  </head>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
 
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topFixedNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-      <a class="navbar-brand" href="index.html"><img src="pictures/logo.png"></a></div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="topFixedNavbar1">
-      <ul class="nav navbar-nav">
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Registrar<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/registrarParticipantes">Participante</a></li>
-            <li><a href="/registrarGrupo">Grupo</a></li>
-            <li><a href="/registrarEntrenadores">Entrenador</a></li>
-            <li class="divider"></li>
-            <li><a href="/registrarTaller">Taller</a></li>
-            <li><a href="/registrarPrograma">Programa</a></li>
-          </ul>
-        </li>
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topFixedNavbar1">
+                <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                    class="icon-bar"></span><span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="index.html"><img src="pictures/logo.png"></a></div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="topFixedNavbar1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Registrar<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/registrarParticipantes">Participante</a></li>
+                        <li><a href="/registrarGrupo">Grupo</a></li>
+                        <li><a href="/registrarEntrenadores">Entrenador</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/registrarTaller">Taller</a></li>
+                        <li><a href="/registrarPrograma">Programa</a></li>
+                    </ul>
+                </li>
 
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/consultarParticipantes">Consultar Participantes</a></li>
-            <li><a href="/consultarEntrenadores">Consultar Entrenadores</a></li>
-            <li><a href="/enviarMaterial">Enviar Material a Grupos</a></li>
-            <li><a href="/enviarPromocion">Enviar Promociones</a></li>
-          </ul>
-        </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Administrar<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/consultarParticipantes">Consultar Participantes</a></li>
+                        <li><a href="/consultarEntrenadores">Consultar Entrenadores</a></li>
+                        <li><a href="/enviarMaterial">Enviar Material a Grupos</a></li>
+                        <li><a href="/enviarPromocion">Enviar Promociones</a></li>
+                    </ul>
+                </li>
 
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Voluntarios<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/registrarVoluntario">Registrar Voluntarios</a></li>
-            <li><a href="/consultarVoluntarios">Consultar Voluntario</a></li>
-            <li><a href="/tipoVoluntario">Tipo Voluntario</a></li>
-          </ul>
-        </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Voluntarios<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/registrarVoluntario">Registrar Voluntarios</a></li>
+                        <li><a href="/consultarVoluntarios">Consultar Voluntario</a></li>
+                        <li><a href="/tipoVoluntario">Tipo Voluntario</a></li>
+                    </ul>
+                </li>
 
 
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Pagos<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/realizarPago">Realizar Pago</a></li>
-            <li><a href="/cuentasPorCobrar">Cuentas por cobrar</a></li>
-          </ul>
-        </li>
-        <li><a href="/Inscripciones">Inscripciones</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Pagos<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/realizarPago">Realizar Pago</a></li>
+                        <li><a href="/cuentasPorCobrar">Cuentas por cobrar</a></li>
+                    </ul>
+                </li>
+                <li><a href="/Inscripciones">Inscripciones</a></li>
 
-      </ul>
+            </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right">
 
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Usuario<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Cerrar Sesión</a></li>
-            <li><a href="#">Configuración</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Usuario<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Cerrar Sesión</a></li>
+                        <li><a href="#">Configuración</a></li>
 
-          </ul>
-        </li>
-      </ul>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
-    <!-- /.navbar-collapse -->
-  </div>
-  <!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </nav>
 
 
 <div class="container" style="margin:30px auto"> >
-<div class="row header" style="text-align:center">
-<h3>Consultar Entrenadores</h3>
-<form method='Get' action='/consultarEntrenadores' >
+    <div class="row header" style="text-align:center">
+        <h3>Consultar Entrenadores</h3>
+        <form method='Get' action='/consultarEntrenadores'>
 
-<table id="myTable" class="table table-striped" >
-        <thead>
-          <tr>
-            <th>$matricula</th>
-            <th>$nombres</th>
-            <th>$apellidos</th>
-            <th>$tel</th>
-            <th>$email</th>
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>$matricula</th>
+                    <th>$nombres</th>
+                    <th>$apellidos</th>
+                    <th>$tel</th>
+                    <th>$email</th>
 
-          </tr>
-        </thead>
-        <tbody align="left">
-        #foreach($entrenador in $entrenadores)
-        #parse( $tableRow )
-        #end
-        </tbody>
-      </table>
+                </tr>
+                </thead>
+                <tbody align="left">
+                #foreach($entrenador in $entrenadores)
+                #parse( $tableRow )
+                #end
+                </tbody>
+            </table>
 
-      </form>
+        </form>
+    </div>
 </div>
-</div>
-</body>  
+</body>
 <script>
-$(document).ready(function(){
-    $('#myTable').dataTable();
-});
+    $(document).ready(function () {
+        $('#myTable').dataTable();
+    });
 </script>
 </html>  
