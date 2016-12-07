@@ -44,30 +44,68 @@
 	color: white;
 	}
 
-.btn-sq-lg {
-	width: 150px !important;
-	height: 150px !important;
-}
-
-.btn-sq {
-	width: 100px !important;
-	height: 100px !important;
-	font-size: 10px;
-}
-
-.btn-sq-sm {
-	width: 50px !important;
-	height: 50px !important;
-	font-size: 10px;
-}
-
-.btn-sq-xs {
-	width: 25px !important;
-	height: 25px !important;
-	padding:2px;
-}
-
+/* Material Design icon */
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 58px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.blue { color: #1c94c4; }
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/* Radio-icon*/
+.option-input {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+	position: relative;
+	top: 13.33333px;
+	width: 30px;
+	height: 30px;
+	/* -webkit-transition: all 0.15s ease-out 0; */
+	/*-moz-transition: all 0.15s ease-out 0;*/
+	/*transition: all 0.15s ease-out 0;*/
+	background: #cbd1d8;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	outline: none;
+	position: relative;
+	margin-right: 0.5rem;
+	z-index: 1000;
+}
+
+.option-input:hover { background: #ffffff; }
+
+.option-input:checked { background: #1c94c4; }
+
+.option-input:checked::before {
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	content: '\2716';
+	display: inline-block;
+	font-size: 26.66667px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.option-input:checked::after {
+	-webkit-animation: click-wave 0.65s;
+	-moz-animation: click-wave 0.65s;
+	animation: click-wave 0.65s;
+	background: #1c94c4;
+	content: '';
+	display: block;
+	position: relative;
+	z-index: 100;
+}
+
+.option-input.radio { border-radius: 50%; }
+
+.option-input.radio::after { border-radius: 50%; }
