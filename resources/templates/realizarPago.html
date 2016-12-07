@@ -110,17 +110,11 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
        <option value="" selected disabled>Nothing Selected</option>
        #set($i=1)
        #foreach ($participante in $participantes)
-       <option value="$participante.getBalance()">$participante.getMatricula(): $participante.getNombre() $participante.getApellidos()</option>
+       <option value="$participante.getMatricula()">$participante.getNombre() $participante.getApellidos()</option>
        #set($i = $i+ 1)
        #end
 </select>
 
-    <script>
-     function myFunction() {
-         var x = document.getElementById("mySelect").value;
-         document.getElementById('balance').value = x;
-      }
-     </script>
 
 </div>
 <div class="form-group">
@@ -138,20 +132,15 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
   <option value="" selected disabled>Nothing selected</option>
   #set($i=1)
   #foreach ($grupo in $grupos)
-  <option>$i: $grupo.getNombre()</option>
+  <option  value="$grupo.getCodigo()" >$grupo.getNombre()</option>
   #set($i = $i+ 1)
   #end
   <option></option>
 </select>
 </div>
-
-<div class="form-group">
-<label>Balance</label>
-<input type="text" id="balance" class="form-control" name="balance" value=" " readonly/>
-</div>
-
+  <br/>
   <div class="form-group">
-    <input type="submit" id="btnSubmit" value="Realizar Pago" class="form-control">
+    <input type="submit" id="btnSubmit" class= "form-control"value="Realizar Pago" class="form-control">
     </div>
   </form>
   </div>

@@ -10,4 +10,7 @@ public interface ICRUD <T> {
     public Boolean update(T entity);
     public T readOne(String id);
     public Boolean delete(String id);
+    public ArrayList<T> otherStuff(
+
+    );
 }

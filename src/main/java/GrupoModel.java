@@ -29,13 +29,11 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
     @Override
     public Boolean insert(T entity) {
         String codigo =id.generateSessionKey(6);
-        String sql = "insert into grupos (fechainicio, fechafin, codigo, tipo, entrenador, precio,  cupo, nombre, fechapago1, fechapago2, fechapago3) Values (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?);";
+        String sql = "insert into grupos (fechainicio, fechafin, codigo, tipo, entrenador, precio,  cupo, nombre, fechadepago1, fechadepag2, fechadepag3) Values (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?);";
         String sql2 = "Select codigo from grupos where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
         try {
-
-
             psmt= Conn.prepareStatement(sql);
 
             //verificando si el codigo existe
@@ -62,6 +60,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             psmt.setDate    (11, new Date( entity.getFechaDePago3().getTime()));
             psmt.executeUpdate();
             psmt.close();
+            psmt1.close();
 
         }
         catch (SQLException e){
@@ -112,8 +111,8 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
                         resultSet.getInt("cupo"),
                         resultSet.getFloat("precio"),
                         resultSet.getDate("fechadepago1"),
-                        resultSet.getDate("fechadepago2"),
-                        resultSet.getDate("fechadepago3")
+                        resultSet.getDate("fechadepag2"),
+                        resultSet.getDate("fechadepag3")
                 );
                 grupos.add(grupo);
             }
@@ -145,7 +144,7 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             String updateQuery =
                     "update grupos set fechainicio=?, fechafin=?, codigo=?, tipo=?, entrenador=?, " +
                             "precio=?, cupo=?," +
-                            " nombre=?, fechadepago1=?, fechadepago2=? , fechadepago3=? where codigo= ?;"
+                            " nombre=?, fechadepago1=?, fechadepag2=? , fechadepag3=? where codigo= ?;"
                     ;
 
             psmt = Conn.prepareStatement(updateQuery);
@@ -164,8 +163,8 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
             psmt.setDate   (11, new Date( entity.getFechaDePago3().getTime()));
             psmt.setString (12, entity.getCodigo());
 
-
             psmt.executeUpdate();
+            psmt.close();
             Conn.close();
         } catch(Exception e) {
             System.out.println(e.getMessage());
@@ -267,5 +266,10 @@ public class GrupoModel<T extends Grupo> implements ICRUD<T> {
 
         return true;
 
+    }
+
+    @Override
+    public ArrayList<T> otherStuff() {
+        return null;
     }
 }

@@ -266,6 +266,11 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
 
     }
 
+    @Override
+    public ArrayList<T> otherStuff() {
+        return null;
+    }
+
 
 }
 

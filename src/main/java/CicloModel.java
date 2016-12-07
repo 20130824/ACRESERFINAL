@@ -250,4 +250,9 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
 
         return true;
     }
+
+    @Override
+    public ArrayList<T> otherStuff() {
+        return null;
+    }
 }

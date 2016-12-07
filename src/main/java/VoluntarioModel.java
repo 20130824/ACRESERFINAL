@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +20,7 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
     private GenerateID id;
     private PreparedStatement psmt1;
     private Voluntario voluntario;
+    private OtherVolunteer volunteer;
 
     public VoluntarioModel(int port, String passWord, String db_Name, String username ){
         this.port = port;
@@ -104,7 +106,7 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
                   voluntario = new Voluntario(
                         resultSet.getString("participanteid"),
                           resultSet.getString("tipovoluntarioid"),
-                          new java.util.Date(resultSet.getDate("fechaincio").getTime()),
+                          new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                           resultSet.getString("codigo")
                   );
 
@@ -216,6 +218,12 @@ public class VoluntarioModel<T extends Voluntario> implements ICRUD<T> {
 
     @Override
     public Boolean delete(String id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<T> otherStuff() {
+
         return null;
     }
 }

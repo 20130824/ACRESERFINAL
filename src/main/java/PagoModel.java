@@ -30,7 +30,7 @@ public class PagoModel <T extends  Pago> implements  ICRUD<T> {
     public Boolean insert(T entity) {
         String sql = "insert into historialpagos(fechapagado, montopagado, participante, codigo_pago, grupo) Values (?, ?, ?, ?, ?);";
         String matricula =id.generateSessionKey(6);
-        String sql2 = "Select codigo_pago from entrenadores where codigo_pago= ?";
+        String sql2 = "Select * from historialpagos where codigo_pago= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
         try {
@@ -212,6 +212,11 @@ public class PagoModel <T extends  Pago> implements  ICRUD<T> {
 
     @Override
     public Boolean delete(String id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<T> otherStuff() {
         return null;
     }
 }

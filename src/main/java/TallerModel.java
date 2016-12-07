@@ -241,4 +241,9 @@ public class TallerModel<T extends  Taller> implements ICRUD<T> {
 
 
     }
+
+    @Override
+    public ArrayList<T> otherStuff() {
+        return null;
+    }
 }

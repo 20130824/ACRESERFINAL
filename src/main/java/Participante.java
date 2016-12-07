@@ -105,7 +105,7 @@ public class Participante {
         }
 
     public String getTelRes() {
-        return TelCel;
+        return TelRes;
     }
 
     public void setTelRes(String TelRes) {

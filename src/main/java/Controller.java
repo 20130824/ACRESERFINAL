@@ -44,6 +44,7 @@ public class Controller {
     private  static  ICRUD <Voluntario>      voluntarioModel;
     private  static  ICRUD <TipoVoluntario>  tipoVoluntarioModel;
     private  static  ICRUD <Pago>            pagoModel;
+    private  static  ICRUD<OtherVolunteer>   otherVolunteerModel;
 
     public  static String layout;
     public static void main(String[] args) {
@@ -57,6 +58,12 @@ public class Controller {
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            otherVolunteerModel = new OtherVolunteerModel<>(5432, "1234", "Acreser", "postgres");
+
+            System.out.println(otherVolunteerModel.otherStuff().get(0).getParticipante().getNombre());
+             // System.out.println( grupoModel.update(new Grupo("dpZMVz", "Intensive60",new SimpleDateFormat("yyyy-MM-dd").parse("2016-12-30") , new SimpleDateFormat("yyyy-MM-dd").parse("2016-12-20"), new Taller(null, null, "OOSIDU", null), "hUkY9o", Integer.parseInt("25"), Float.parseFloat("32783"), new SimpleDateFormat("yyyy-MM-dd").parse("2016-12-06"), new SimpleDateFormat("yyyy-MM-dd").parse("2016-12-10"),new SimpleDateFormat("yyyy-MM-dd").parse("2016-12-12"))));
+
             //tipoVoluntarioModel = new TipoVoluntarioModel<>(5432, "1234", "Acreser", "postgres");
            // System.out.println(tipoVoluntarioModel.update(new TipoVoluntario("Staff", "Es un tipo de personas bien especificas que manejan los Intensive, y los discovery", "eJz772")));
 
@@ -83,12 +90,12 @@ public class Controller {
             // }
             //System.out.println( grupoModel.readOne("fsdbn").getNombre());
 
-            tallerModel = new TallerModel<>(5432, "1234", "Acreser", "postgres");
-            System.out.println(tallerModel.getElements().get(0).getNombre());
+           // tallerModel = new TallerModel<>(5432, "1234", "Acreser", "postgres");
+           // System.out.println(tallerModel.getElements().get(0).getNombre());
 
             // Participante par = new Participante("Pierre Dany", "Ridore Lamothe", formatter.parse("1992-05-14"), 'M',"uPm39t", "JNNJN-MMHGMB", "ridoreda1992@gmail.com", "8294480042", "8099714287", 9000);
-            participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
-            System.out.println(participanteModel.readOne("uPm39t").getBalance());
+            //participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
+           // System.out.println(participanteModel.readOne("uPm39t").getBalance());
             //  ArrayList<Participante> participantes = participanteModel.getElements();
 
             // System.out.println(participanteModel.update(par));
@@ -121,8 +128,8 @@ public class Controller {
             String nombres = request.queryParams("nombre");
             String apellidos = request.queryParams("apellido");
             String cedula = request.queryParams("cedula");
-            String telRes = request.queryParams("res1") + request.queryParams("res2") + request.queryParams("res3");
-            String telcel = request.queryParams("cel1") + request.queryParams("cel2") + request.queryParams("cel3");
+            String telRes = request.queryParams("res1") + request.queryParams("res2")+ request.queryParams("res3");
+            String telcel = request.queryParams("cel1")+ request.queryParams("cel2")+  request.queryParams("cel3");
             String sexo = request.queryParams("Sexo");
             String fecha = request.queryParams("birthday");
             String email = request.queryParams("email");
@@ -130,6 +137,7 @@ public class Controller {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(fecha);
 
+            participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
             System.out.println(nombres + "  " + apellidos + " " + fecha + "  " + cedula + "  " + sexo + "  " + telcel + "  " + telRes);
             if (participanteModel.insert(new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes, 0))) {
                 model.put("name", " El participante:  " + nombres);
@@ -210,13 +218,84 @@ public class Controller {
             }
         }, new VelocityTemplateEngine());
 //****************************************************************************************************************************************8
-         get("/registrarGrupo", (request, response) -> {
+
+
+        get("/consultarParticipantes", (request, response) -> {
             response.type("text/html");
-             //pagoModel = new PagoModel<>(5432, "1234", "Acreser", "postgres");
-             entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
             HashMap model = new HashMap();
 
+            model.put("matricula", "Matricula");
+            model.put("nombres", "Nombre(s)");
+            model.put("apellidos","Apellido(s)");
+            model.put("email", "Email");
+            model.put("tel", "Celular");
+            model.put("balance", "Balance");
+            participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
+
+            model.put("participantes", participanteModel.getElements());
+            model.put("tableRow", "templates/tableRow.html");
+            model.put("template", "templates/consultarParticipantes.html");
+            return new ModelAndView(model, "templates/consultarParticipantes.html");
+        }, new VelocityTemplateEngine());
+
+
+        post("/consultarParticipantes", (request, response) -> {
+            response.type("text/html");
+            tallerModel = new TallerModel<>(5432, "1234", "Acreser", "postgres");
+            HashMap model = new HashMap();
+
+                return new ModelAndView(model, "templates/registrarTaller.html");
+
+        }, new VelocityTemplateEngine());
+
+//*****************************************************************************************************************************
+        get("/consultarEntrenadores", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            model.put("matricula", "Matricula");
+            model.put("nombres", "Nombre(s)");
+            model.put("apellidos","Apellido(s)");
+            model.put("email", "Email");
+            model.put("tel", "Celular");
+            entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
+
+            model.put("entrenadores", entrenadorModel.getElements());
+            model.put("tableRow", "templates/trEntrenadores.html");
+            model.put("template", "templates/consultarEntrenadores.html");
+            return new ModelAndView(model, "templates/consultarEntrenadores.html");
+        }, new VelocityTemplateEngine());
+
+//****************************************************************************************************************************************
+        get("/consultarVoluntarios", (request, response) -> {
+            response.type("text/html");
+            HashMap model = new HashMap();
+
+            model.put("funcion", "Funcion");
+            model.put("nombre",  "Nombre(s)");
+            model.put("apellido", "Apellido(s)");
+            model.put("matricula","Matricula");
+            model.put("fecha", "Fecha Inicio");
+
+            otherVolunteerModel = new OtherVolunteerModel<>(5432, "1234", "Acreser", "postgres");
+
+            model.put("voluntarios", otherVolunteerModel.otherStuff());
+            model.put("tableRow", "templates/trVoluntarios.html");
+
+            model.put("template", "templates/consultarVoluntarios.html");
+            return new ModelAndView(model, "templates/consultarVoluntarios.html");
+        }, new VelocityTemplateEngine());
+
+//****************************************************************************************************************************************
+
+        get("/registrarGrupo", (request, response) -> {
+            response.type("text/html");
+
+            HashMap model = new HashMap();
+
+             tallerModel = new TallerModel<>(5432, "1234", "Acreser", "postgres");
             model.put("talleres", tallerModel.getElements());
+             entrenadorModel = new EntrenadorModel<>(5432, "1234", "Acreser", "postgres");
              model.put("entrenadores", entrenadorModel.getElements());
             model.put("template", "templates/registrarGrupo.html");
             return new ModelAndView(model, "templates/registrarGrupo.html");
@@ -225,7 +304,6 @@ public class Controller {
 
         post("/registrarGrupo", (request, response) -> {
             response.type("text/html");
-            grupoModel   = new GrupoModel<>(5432, "1234", "Acreser", "postgres");
             HashMap model = new HashMap();
             String nombre = request.queryParams("nombre");
             String fechaInicio = request.queryParams("fechaInicio");
@@ -238,34 +316,21 @@ public class Controller {
             String fechaPago2 = request.queryParams("fecha2");
             String fechaPago3 = request.queryParams("fecha3");
 
-
-
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-           Date date1  = formatter.parse(fechaPago1);
-           Date date2 = formatter.parse(fechaPago2);
-           Date date3 = formatter.parse(fechaPago3);
-            // Grupo(String codigo, String nombre, Date fechaInicio, Date fechaFin, Taller tipo,  String codigoEntrenador, Integer cupo, Float precio, Date fechaDePago1, Date fechaDePago2, Date fechaDePago3) {
+            Date date1  = formatter.parse(fechaPago1);
+            Date date2 = formatter.parse(fechaPago2);
+            Date date3 = formatter.parse(fechaPago3);
             Date fechaIni = formatter.parse(fechaInicio);
             Date fechafin = formatter.parse(fechaFin);
             String[] st = new String[2];
             st = entrenador.split(":");
-            entrenador = tipoVoluntarioModel.getElements().get((Integer.parseInt(st[0])-1)).getCodigo();
 
-                    Iterator<Taller> iterator = tallerModel.getElements().iterator();
-                     while(iterator.hasNext())
-                     {
-                         if (iterator.next().getNombre().equals(tipo)) tipo= iterator.next().getCodigo();
+            grupoModel   = new GrupoModel<>(5432, "1234", "Acreser", "postgres");
+          System.out.println(grupoModel.insert(new Grupo(null, nombre, fechaIni, fechafin, new Taller(null, null, tipo, null), st[0], Integer.parseInt(cupo), Float.parseFloat(costo), date1, date2, date3)));
 
-                     }
+            response.status(400);
+            return new ModelAndView(model, "templates/registrarGrupo.html");
 
-            if (grupoModel.insert(new Grupo(null, nombre, fechaIni, fechafin, new Taller(null, null, tipo, null), entrenador, Integer.parseInt(cupo), Float.parseFloat(costo), date1, date2, date3))){
-                model.put("name", nombre);
-                return new ModelAndView(model, "templates/registrarGrupo.html");
-            } else{
-                response.status(404);
-                model.put("error", "hubo un error al registrar el Grupo!!!");
-                return new ModelAndView(model, "templates/registrarGrupo.html");
-            }
 
         }, new VelocityTemplateEngine());
 //****************************************************************************************************************************************
@@ -281,10 +346,10 @@ public class Controller {
         post("/registrarPrograma", (request, response) -> {
             response.type("text/html");
             HashMap model = new HashMap();
-            String nombre = request.queryParams("nombre");
+            String nombre = request.queryParams("nombre" );
             String fechaInicio = request.queryParams("fechaInicio");
             String fechaFin = request.queryParams("fechaFin");
-            String tipo = request.attribute("tipo");
+            String tipo = request.queryParams("tipo");
             String talleres = request.queryParams("talleres");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaini = formatter.parse(fechaInicio);
@@ -329,17 +394,13 @@ public class Controller {
             String monto = request.queryParams("monto");
             String fechaPago = request.queryParams("fechaPago");
             String grupo = request.queryParams("grupo");
+
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date1 = formatter.parse(fechaPago);
-            String[] st = new String[2];
-            st =  participante.split(":");
-            String[] st1 = new String[2];
-            st1 =  grupo.split(":");
 
 
-            String codigoGrupo = grupoModel.getElements().get((Integer.parseInt(st1[0])-1)).getCodigo();
-            System.out.println(st[0]+ "  " + monto + " " + date1 + " " + codigoGrupo );
-            if (pagoModel.insert(new Pago(date1, Float.parseFloat(monto), st[0],null, st1[0]))){
+            System.out.println( monto + " " + date1 + " " + grupo );
+            if (pagoModel.insert(new Pago(date1, Float.parseFloat(monto), participante, null, grupo))){
                 model.put("name", "Pago");
                 return new ModelAndView(model, "templates/realizarPago.html");
             } else{

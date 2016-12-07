@@ -79,6 +79,7 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<T> getElements() {
         String query = "SELECT * FROM tiposvoluntarios;";
 
@@ -162,6 +163,7 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T readOne(String codigo) {
 
         connection = new DbConnection(username, passWord, db_Name, port);
@@ -210,5 +212,10 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
     public Boolean delete(String id) {
         return null;
 
+    }
+
+    @Override
+    public ArrayList<T> otherStuff() {
+        return null;
     }
 }

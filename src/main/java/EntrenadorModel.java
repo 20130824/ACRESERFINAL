@@ -273,4 +273,9 @@ public class EntrenadorModel<T extends Entrenador> implements ICRUD<T> {
 
         return true;
     }
+
+    @Override
+    public ArrayList<T> otherStuff() {
+        return null;
+    }
 }
