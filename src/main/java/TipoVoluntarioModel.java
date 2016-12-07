@@ -31,7 +31,7 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
     @Override
     public Boolean insert(T entity) {
         String codigo =id.generateSessionKey(6);
-        String sql = "insert into tiposvoluntarios(nombre, descripcion, codigo_taller, codigo) Values (?, ?, ?, ?);";
+        String sql = "insert into tiposvoluntarios(nombre, descripcion, codigo) Values ( ?, ?, ?);";
         String sql2 = "Select codigo from tiposvoluntarios where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
@@ -46,15 +46,13 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
             psmt1.executeQuery();
             resultSet= psmt1.getResultSet();
 
-            psmt.setString(1, entity.getNombre()); // need the field of the participante  -- participanteId
+            psmt.setString(1, entity.getNombre());
             psmt.setString(2, entity.getDescripcion());
-            psmt.setString(3, entity.getCodigoTaller());
-
             if(resultSet.next()) {
                 codigo = id.generateSessionKey(6);
-                psmt.setString(4, codigo);
+                psmt.setString(3, codigo);
             }else {
-                psmt.setString(4, codigo);
+                psmt.setString(3, codigo);
             }
 
             psmt.executeUpdate();
@@ -100,7 +98,6 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
                 tiposvoluntario = new TipoVoluntario(
                         resultSet.getString("nombre"),
                         resultSet.getString("descripcion"),
-                         resultSet.getString("codigo_taller"),
                         resultSet.getString("codigo")
                 );
 
@@ -134,16 +131,15 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
         Conn = connection.Connect();
         try {
             String updateQuery =
-                    "update tiposvoluntarios set nombre=?, descripcion= ?, codigo_taller=?, codigo=?  where codigo = ?;"
+                    "update tiposvoluntarios set nombre=?, descripcion= ?, codigo=?  where codigo = ?;"
                     ;
 
             psmt = Conn.prepareStatement(updateQuery);
 
             psmt.setString(1, entity.getNombre());
             psmt.setString(2, entity.getDescripcion());
-            psmt.setString(3, entity.getCodigoTaller());
+            psmt.setString(3, entity.getCodigo());
             psmt.setString(4, entity.getCodigo());
-            psmt.setString(5, entity.getCodigo());
 
             psmt.executeUpdate();
             return true;
@@ -185,7 +181,6 @@ public class TipoVoluntarioModel <T extends TipoVoluntario>implements ICRUD<T> {
                 tiposvoluntario = new TipoVoluntario(
                         resultSet.getString("nombre"),
                         resultSet.getString("descripcion"),
-                        resultSet.getString("codigo_taller"),
                         resultSet.getString("codigo")
                 );
                 psmt.close();

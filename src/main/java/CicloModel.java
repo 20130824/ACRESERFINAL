@@ -34,7 +34,7 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
 
         String codigo =id.generateSessionKey(6);
         String sql = "insert into ciclo(nombre, codigo, fechainicio, fechafin , tipo, talleres) Values (?, ?, ?, ?,?, ?);";
-        String sql2 = "Select codigo from ciclos where codigo= ?";
+        String sql2 = "Select codigo from ciclo where codigo= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
 
@@ -104,7 +104,7 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
                         resultSet.getString("Codigo"),
                         new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                         new java.util.Date(resultSet.getDate("fechafin").getTime()),
-                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES,
+                        resultSet.getInt("tipo"),
                         new Taller(resultSet.getString("talleres"), null, null, null)
                 );
 
@@ -192,7 +192,7 @@ public class CicloModel<T extends  Ciclo> implements ICRUD<T> {
                         resultSet.getString("codigo"),
                         new java.util.Date(resultSet.getDate("fechainicio").getTime()),
                         new java.util.Date(resultSet.getDate("fechafin").getTime()),
-                        resultSet.getInt("tipo")== 2 ? TipoCiclo.ADULTOS: TipoCiclo.JOVENES,
+                        resultSet.getInt("tipo"),
                         new Taller(resultSet.getString("talleres"), null, null, null)
                 );
                 psmt.close();
