@@ -1,262 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registrar Participante</title>
+
     <!-- Bootstrap -->
-	<link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/botones.css" rel="stylesheet">
-	<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
-	<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
-	<link href="jQueryAssets/jquery.ui.datepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+    <link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+    <link href="jQueryAssets/jquery.ui.datepicker.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!-- Formatos de campos fijos-->
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-  <script src="jQueryAssets/jquery-1.11.1.min.js" type="text/javascript"></script>
-  <script src="jQueryAssets/jquery.ui-1.10.4.datepicker.min.js" type="text/javascript"></script>
-  <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    var datefield=document.createElement("input")
-    datefield.setAttribute("type", "date")
-    if (datefield.type!="date"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
-        document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
-        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
-        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n') 
-    }
-</script>
- 
-<script>
-if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
-    jQuery(function($){ //on document.ready
-        $('#birthday').datepicker();
-    })
-}
-</script>
-      <!Recapcha -->
-      <script src='https://www.google.com/recaptcha/api.js'></script>
-  </head>
-  <body style="...">
+    <script type="text/javascript">
+        $(document).ready(function ($) {
 
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topFixedNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-              <a class="navbar-brand" href="index.html"><img src="pictures/logo.png"></a></div>
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="topFixedNavbar1">
-              <ul class="nav navbar-nav">
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Registrar<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="/registrarParticipantes">Participante</a></li>
-                          <li><a href="/registrarGrupo">Grupo</a></li>
-                          <li><a href="/registrarEntrenadores">Entrenador</a></li>
-                          <li class="divider"></li>
-                          <li><a href="/registrarTaller">Taller</a></li>
-                          <li><a href="/registrarPrograma">Programa</a></li>
-                      </ul>
-                  </li>
+            $('#ced').mask("999-9999999-9", {placeholder: ""});
+            $('#pas').mask("99-9999999", {placeholder: ""});
+            $('#cel').mask("+1(999)-999-9999", {placeholder: ""});
+            $('#tel').mask("+1(999)-999-9999", {placeholder: ""});
+        });
 
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="/consultarParticipantes">Consultar Participantes</a></li>
-                          <li><a href="/consultarEntrenadores">Consultar Entrenadores</a></li>
-                          <li><a href="/enviarMaterial">Enviar Material a Grupos</a></li>
-                          <li><a href="/enviarPromocion">Enviar Promociones</a></li>
-                      </ul>
-                  </li>
+    </script>
 
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Voluntarios<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="/registrarVoluntario">Registrar Voluntarios</a></li>
-                          <li><a href="/consultarVoluntarios">Consultar Voluntario</a></li>
-                          <li><a href="/tipoVoluntario">Tipo Voluntario</a></li>
-                      </ul>
-                  </li>
+    <!-- Tipo de identificacion -->
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        function mostrar(id) {
+            if (id == "cedula") {
+                $("#cedula").show();
+                $("#pasaporte").hide();
+
+            }
+
+            if (id == "pasaporte") {
+                $("#cedula").hide();
+                $("#pasaporte").show();
+
+            }
+
+        }
+    </script>
 
 
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Pagos<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="/realizarPago">Realizar Pago</a></li>
-                          <li><a href="/cuentasPorCobrar">Cuentas por cobrar</a></li>
-                      </ul>
-                  </li>
-                  <li><a href="/Inscripciones">Inscripciones</a></li>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="jQueryAssets/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="jQueryAssets/jquery.ui-1.10.4.datepicker.min.js" type="text/javascript"></script>
+    <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var datefield = document.createElement("input")
+        datefield.setAttribute("type", "date")
+        if (datefield.type != "date") { //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+            document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')
+        }
+    </script>
 
-              </ul>
+    <script>
+        if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:
+            jQuery(function ($) { //on document.ready
+                $('#birthday').datepicker();
+            })
+        }
+    </script>
+    <!--Recapcha -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body style="...">
 
-              <ul class="nav navbar-nav navbar-right">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topFixedNavbar1">
+                <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                    class="icon-bar"></span><span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="index.html"><img src="pictures/logo.png"></a></div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="topFixedNavbar1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Registrar<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/registrarParticipantes">Participante</a></li>
+                        <li><a href="/registrarGrupo">Grupo</a></li>
+                        <li><a href="/registrarEntrenadores">Entrenador</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/registrarTaller">Taller</a></li>
+                        <li><a href="/registrarPrograma">Programa</a></li>
+                    </ul>
+                </li>
 
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Usuario<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Cerrar Sesión</a></li>
-                          <li><a href="#">Configuración</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Administrar<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/consultarParticipantes">Consultar Participantes</a></li>
+                        <li><a href="/consultarEntrenadores">Consultar Entrenadores</a></li>
+                        <li><a href="/enviarMaterial">Enviar Material a Grupos</a></li>
+                        <li><a href="/enviarPromocion">Enviar Promociones</a></li>
+                    </ul>
+                </li>
 
-                      </ul>
-                  </li>
-              </ul>
-          </div>
-          <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container-fluid -->
-  </nav>
-   
-  <div class="col-md-4 col-md-offset-4">
-  <h2>Registrar Participante</h2>
-  <h3>Datos Personales:</h3>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Voluntarios<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/registrarVoluntario">Registrar Voluntarios</a></li>
+                        <li><a href="/consultarVoluntarios">Consultar Voluntario</a></li>
+                        <li><a href="/tipoVoluntario">Tipo Voluntario</a></li>
+                    </ul>
+                </li>
 
-  <form method='post' action='/gettingParticipants' data-toggle="validator" role="form">
-  <div class="form-group">
-  <label>Nombre(s):</label>
 
-  <div class="input-group">
-    <div class="input-group-addon">
-        <i class="material-icons md-18 blue">account_box</i>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Pagos<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/realizarPago">Realizar Pago</a></li>
+                        <li><a href="/cuentasPorCobrar">Cuentas por cobrar</a></li>
+                    </ul>
+                </li>
+                <li><a href="/Inscripciones">Inscripciones</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                        aria-expanded="false">Usuario<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Cerrar Sesión</a></li>
+                        <li><a href="#">Configuración</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
-      <input type="text" name="nombre" class="form-control" required="required" placeholder="Nombre(s)"/>
+    <!-- /.container-fluid -->
+</nav>
 
-  </div>
-  </div>
+<div class="col-md-4 col-md-offset-4">
+    <h2>Registrar Participante</h2>
+    <h3>Datos Personales:</h3>
 
-
-  <div class="form-group">
- <label>Apellido(s):</label>
-      <div class="input-group">
-          <div class="input-group-addon">
-              <i class="material-icons md-18 blue">account_box</i>
-          </div>
- <input type="text" name="apellido"  class="form-control" required="required" placeholder="Apellido(s)">
- </div>
-  </div>
-
- <div class="form-group">
- <label>Fecha de Nacimiento:</label>
-     <div class="input-group">
-         <div class="input-group-addon">
-             <i class="material-icons md-18 blue" >date_range</i>
-         </div>
-     <input type="date" id="birthday" name="birthday" size="20" class="form-control" required="required" placeholder="Fecha de Nacimiento"/>
- </div>
- </div>
- <div class="form-group">
- <label>Cedula/Pasoporte:</label>
-     <div class="input-group">
-         <div class="input-group-addon">
-             <i class="material-icons md-18 blue">credit_card</i>
-         </div>
- <input type="text" name="cedula" class="form-control" maxlength="13" placeholder="XXXXXXXXXXXXX" required="required">
- </div>
- </div>
- <div class="form-group" >
- <label>Sexo:</label>
-     <label>
-         <input type="radio" class="option-input radio" required="required" name="Sexo" value="M" id="Sexo_0" placeholder="Sexo" />
-         Masculino
-     </label>
-     <label>
-         <input type="radio" class="option-input radio" required="required" name="Sexo" value="F" id="Sexo_1" />
-         Femenino
-     </label>
-   <br>
- </p>
- </div>
-
-  	<div class="form-group">
-  	<label>Email:</label>
-        <div class="input-group">
-            <div class="input-group-addon">
-                <i class="material-icons md-18 blue">email</i>
-            </div>
-    <input type="email" name="email" class="form-control" placeholder="Correo Electronico" required="required">
-   </div>
-    </div>
-
-   <div class="form-group">
-    <label>Telefono Celular:</label>
-       <div class="container">
-           <div class="col-xs-4">
-               <div class="input-group">
-                   <div class="input-group-addon">
-                       <i class="material-icons md-18 blue">phone</i>
-                   </div>
-
-                   <div class="form-group phone-number">
-                   <div class="col-xs-3">
-
-                       <input type="tel" name="cel1" class="form-control" value="" size="3" maxlength="3" required="required" title=""
-                       placeholder="XXX">
-                   </div>
-
-                   <div class="col-xs-3">
-                       <input type="tel" name="cel2" class="form-control" value="" size="3" maxlength="3" required="required" title=""
-                       placeholder="XXX">
-                   </div>
+    <form method='post' action='/gettingParticipants' data-toggle="validator" role="form">
 
 
-                   <div class="col-xs-4">
-                       <input type="tel" name="cel3" class="form-control" value="" size="4" maxlength="4" required="required" title=""
-                       placeholder="XXXX">
-                   </div>
-               </div>
-           </div>
-       </div>
-    </div>
-    <div class ="form-group">
-    <label>Telefono Residencial:</label>
-        <div class="container">
-            <div class="col-xs-4">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <i class="material-icons md-18 blue">phone</i>
-                    </div>
-                <div class="form-group phone-number">
-                    <div class="col-xs-3">
-                        <input type="tel" name="res1" class="form-control" value="" size="3" maxlength="3" required="required" title=""
-                        placeholder="XXX">
-                    </div>
-
-                    <div class="col-xs-3">
-                        <input type="tel" name="res2" class="form-control" value="" size="3" maxlength="3" required="required" title=""
-                        placeholder="XXX">
-                    </div>
-
-
-                    <div class="col-xs-4">
-                        <input type="tel" name="res3" class="form-control" value="" size="4" maxlength="4" required="required" title=""
-                        placeholder="XXXX">
-                    </div>
+        <div class="form-group">
+            <label>Nombre(s):</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="material-icons md-18 blue">account_box</i>
                 </div>
+                <input type="text" class="form-control" id="name" name="nombre" maxlength="50" required="required"
+                       placeholder="Nombre(s)"
+                />
+
             </div>
         </div>
-    </div>
-        <br>
-      <div
-              style="margin-left: 15%"
-              class="g-recaptcha" data-sitekey="6Le7WCMTAAAAAFGqChVDfyU4lrF2N-ETD54H4WQa">
 
-      </div>
 
-        <br>
         <div class="form-group">
-    <input type="submit" id="btnSubmit" class="form-control">
-    </div>
-    </div>
-    </div>
-  </form>
+            <label>Apellido(s):</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="material-icons md-18 blue">account_box</i>
+                </div>
+                <input type="text" class="form-control" id="apellido" name="apellido" maxlength="50" required="required"
+                       placeholder="Apellido(s)"
+                >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha de Nacimiento:</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="material-icons md-18 blue">date_range</i>
+                </div>
+                <input type="date" class="form-control" id="birthday" name="birthday" size="20" required="required"
+                       placeholder="Fecha de Nacimiento"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Cedula/Pasaporte:</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="material-icons md-18 blue">credit_card</i>
+                </div>
+                <select class="form-control" id="status" required="required" onChange="mostrar(this.value);">
+                    <option value="" disabled selected>Seleccione una opcion</option>
+                    <option value="cedula">Cedula</option>
+                    <option value="pasaporte">Pasaporte</option>
+                </select>
+            </div>
+
+            <div id="cedula" style="display:none;">
+                <input type="text" class="form-control" id="ced" name="cedula" required="required"
+                       placeholder="No. Cedula">
+            </div>
+
+            <div id="pasaporte" style="display: none;">
+                <input type="text" class="form-control" id="pas" name="cedula" required="required"
+                       placeholder="No. Pasaporte"
+                >
+            </div>
+        </div>
 
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-  <script src="js/jquery-1.11.2.min.js"></script>
+        <div class="form-group">
+            <label>Sexo:</label>
+            <select class="form-control" id="sexo" required="required">
+                <option value="" disabled selected>Seleccione una opcion</option>
+                <option value="M"> Masculino</option>
+                <option value="F"> Femenino</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Email:</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="material-icons md-18 blue">email</i>
+                </div>
 
-	<!-- Include all compiled plugins (below), or include individual files as needed --> 
-  <script src="js/bootstrap.js"></script>
-  </body>
+                <input type="email" class="form-control" id="email" name="email" maxlength="50" required="required"
+                       placeholder="Correo Electrónico"
+                >
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Telefono Celular:</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="material-icons md-18 blue">phone</i>
+                </div>
+
+                <input type="text" class="form-control" id="cel" name="cel" required="required"
+                       placeholder="(xxx)-xxx-xxxx">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Telefono Residencial:</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="material-icons md-18 blue">phone</i>
+                </div>
+                <div class="form-group phone-number">
+                    <input type="text" class="form-control" id="tel" name="tel" required="required"
+                           placeholder="(xxx)-xxx-xxxx">
+                </div>
+
+            </div>
+        </div>
+        <div
+                style="margin: auto "
+                class="g-recaptcha" data-sitekey="6Le7WCMTAAAAAFGqChVDfyU4lrF2N-ETD54H4WQa">
+
+        </div>
+
+        <br>
+
+        <div class="form-group">
+            <input class="form-control" type="submit"/>
+        </div>
+
+
+        <div class="form-group">
+            <input class="form-control" type="reset" value="Limpiar campos"/>
+        </div>
+
+
+    </form>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-1.11.2.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.js"></script>
+</div>
+</body>
 </html>
