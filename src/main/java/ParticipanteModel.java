@@ -29,7 +29,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
     @SuppressWarnings("Unchecked")
     public Boolean insert( T insert) {
         String matricula =id.generateSessionKey(6);
-        String sql = "insert into participantes(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel, balance) Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "insert into participantes(nombres, apellidos, fechanacimiento, sexo, matricula, cedula, email, telres, telcel, balance, nacionalidad) Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         String sql2 = "Select matricula from participantes where matricula= ?";
         connection = new DbConnection(username, passWord, db_Name, port);
         Conn = connection.Connect();
@@ -61,7 +61,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
             psmt.setString(8, insert.getTelRes());
             psmt.setString(9, insert.getTelCel());
             psmt.setFloat(10, insert.getBalance());
-
+            psmt.setString(11, insert.getNacionalidad());
             psmt.executeUpdate();
             psmt.close();
             return true;
@@ -112,7 +112,8 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
                         resultSet.getString("email"),
                         resultSet.getString("telcel"),
                         resultSet.getString("telres"),
-                        resultSet.getFloat("balance")
+                        resultSet.getFloat("balance"),
+                        resultSet.getString("nacionalidad")
                 );
 
                 participantes.add(participante);
@@ -146,7 +147,7 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
             String updateQuery =
                     "update participantes set nombres=?, apellidos= ?, fechanacimiento=?, sexo=?, matricula= ?,  cedula=?, " +
                             "email=?, telres=?," +
-                            " telcel=?, balance=?  where matricula = ?;"
+                            " telcel=?, balance=?, nacionalidad=? where matricula = ?;"
                     ;
 
             psmt = Conn.prepareStatement(updateQuery);
@@ -162,7 +163,8 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
             psmt.setString(8, entity.getTelRes());
             psmt.setString(9, entity.getTelCel());
             psmt.setFloat(10, entity.getBalance());
-            psmt.setString(11, entity.getMatricula());
+            psmt.setString(11, entity.getNacionalidad());
+            psmt.setString(12, entity.getMatricula());
             psmt.executeUpdate();
             return true;
         } catch(Exception e) {
@@ -209,7 +211,8 @@ public class ParticipanteModel<T  extends Participante> implements ICRUD<T> {
                         resultSet.getString("email"),
                         resultSet.getString("telcel"),
                         resultSet.getString("telres"),
-                         resultSet.getFloat("balance")
+                         resultSet.getFloat("balance"),
+                         resultSet.getString("nacionalidad")
                 );
                 psmt.close();
                 Conn.close();

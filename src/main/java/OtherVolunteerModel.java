@@ -56,7 +56,7 @@ public class OtherVolunteerModel<T extends OtherVolunteer> implements ICRUD<T> {
     @SuppressWarnings("Unchecked")
     public ArrayList<T> otherStuff() {
         String query = "select p.nombres, p.apellidos, p.matricula, " +
-                " t.nombre, v.fechainicio " +
+                " t.nombre, v.fechainicio , p.nacionalidad" +
                 " FROM participantes p INNER JOIN voluntarios v" +
                 " ON p.matricula = v.participanteid" +
                 " INNER JOIN  tiposvoluntarios t ON v.tipovoluntarioid=t.codigo;";
@@ -75,7 +75,7 @@ public class OtherVolunteerModel<T extends OtherVolunteer> implements ICRUD<T> {
             while (resultSet.next()) {
                 volunteer = new OtherVolunteer(
                         new TipoVoluntario(resultSet.getString("nombre"), null, null),
-                        new Participante(resultSet.getString("nombres"), resultSet.getString("apellidos"), null, '0', resultSet.getString("matricula"), null, null, null, null, 0),
+                        new Participante(resultSet.getString("nombres"), resultSet.getString("apellidos"), null, '0', resultSet.getString("matricula"), null, null, null, null, 0, resultSet.getString("nacionalidad")),
                         new Voluntario(null, null, new java.util.Date(resultSet.getDate("fechainicio").getTime()), null));
 
                 volunteers.add(volunteer);

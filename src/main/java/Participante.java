@@ -8,101 +8,111 @@ import java.util.Date;
 public class Participante {
 
 
-        private String  Nombre;
-        private String  Apellidos;
-        private Date    FechaNacimiento;
-        private char    Sexo;
-        private String  Matricula;
-        private String  Cedula;
-        private String  Email;
-        private String  TelCel;
-        private String  TelRes;
-        private float   balance;
+    private String Nombre;
+    private String Apellidos;
+    private Date FechaNacimiento;
+    private char Sexo;
+    private String Matricula;
+    private String Cedula;
+    private String Email;
+    private String TelCel;
+    private String TelRes;
+    private float balance;
+    private String nacionalidad;
 
-        public Participante(String nombre, String apellidos, Date fechaNacimiento, char sexo, String matricula, String cedula, String email, String telCel, String telRes , float balance) {
-            this.Nombre = nombre;
-            this.Apellidos = apellidos;
-            this.FechaNacimiento = fechaNacimiento;
-            this.Sexo = sexo;
-            this.Matricula = matricula;
-            this.Cedula = cedula;
-            this.Email = email;
-            this.TelCel = telCel;
-            this.TelRes = telRes;
-            this.balance = balance;
-        }
+    public Participante(String nombre, String apellidos, Date fechaNacimiento, char sexo, String matricula, String cedula, String email, String telCel, String telRes, float balance, String nacionalidad) {
+        this.Nombre = nombre;
+        this.Apellidos = apellidos;
+        this.FechaNacimiento = fechaNacimiento;
+        this.Sexo = sexo;
+        this.Matricula = matricula;
+        this.Cedula = cedula;
+        this.Email = email;
+        this.TelCel = telCel;
+        this.TelRes = telRes;
+        this.balance = balance;
+        this.nacionalidad = nacionalidad;
+    }
 
-        public String getNombre() {
-            return Nombre;
-        }
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
 
-        public void setNombre(String Nombre) {
-            this.Nombre = Nombre;
-        }
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
 
-        public String getApellidos() {
-            return Apellidos;
-        }
+    public String getNombre() {
+        return Nombre;
+    }
 
-        public void setApellidos(String Apellidos) {
-            this.Apellidos = Apellidos;
-        }
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
 
-        public Date getFechaNacimiento() {
-            return FechaNacimiento;
-        }
+    public String getApellidos() {
+        return Apellidos;
+    }
 
-        public void setFechaNacimiento(Date FechaNacimiento) {
-            this.FechaNacimiento = FechaNacimiento;
-        }
+    public void setApellidos(String Apellidos) {
+        this.Apellidos = Apellidos;
+    }
 
-        public char getSexo() {
-            return Sexo;
-        }
+    public Date getFechaNacimiento() {
+        return FechaNacimiento;
+    }
 
-        public void setSexo(char Sexo) {
-            this.Sexo = Sexo;
-        }
+    public void setFechaNacimiento(Date FechaNacimiento) {
+        this.FechaNacimiento = FechaNacimiento;
+    }
 
-        public String getMatricula() {
-            return Matricula;
-        }
+    public char getSexo() {
+        return Sexo;
+    }
 
-        public void setMatricula(String Matricula) {
-            this.Matricula = Matricula;
-        }
+    public void setSexo(char Sexo) {
+        this.Sexo = Sexo;
+    }
 
-        public String getCedula() {
-            return Cedula;
-        }
+    public String getMatricula() {
+        return Matricula;
+    }
 
-        public void setCedula(String Cedula) {
-            this.Cedula = Cedula;
-        }
+    public void setMatricula(String Matricula) {
+        this.Matricula = Matricula;
+    }
 
-        public String getEmail() {
-            return Email;
-        }
+    public String getCedula() {
+        return Cedula;
+    }
 
-        public void setEmail(String Email) {
-            this.Email = Email;
-        }
+    public void setCedula(String Cedula) {
+        this.Cedula = Cedula;
+    }
 
-        public String getTelCel() {
-            return TelCel;
-        }
+    public String getEmail() {
+        return Email;
+    }
 
-        public void setTelCel(String TelCel) {
-            this.TelCel = TelCel;
-        }
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
 
-        public float getBalance() {
-            return balance;
-        }
+    public String getTelCel() {
+        return TelCel;
+    }
 
-        public void setBalance(float balance) {
-            this.balance = balance;
-        }
+    public void setTelCel(String TelCel) {
+        this.TelCel = TelCel;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 
     public String getTelRes() {
         return TelRes;
@@ -111,5 +121,5 @@ public class Participante {
     public void setTelRes(String TelRes) {
         this.TelRes = TelRes;
     }
-    }
+}
 

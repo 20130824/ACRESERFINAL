@@ -128,18 +128,19 @@ public class Controller {
             String nombres = request.queryParams("nombre");
             String apellidos = request.queryParams("apellido");
             String cedula = request.queryParams("cedula");
-            String telRes = request.queryParams("res1") + request.queryParams("res2")+ request.queryParams("res3");
-            String telcel = request.queryParams("cel1")+ request.queryParams("cel2")+  request.queryParams("cel3");
-            String sexo = request.queryParams("Sexo");
+            String telRes = request.queryParams("tel");
+            String telcel = request.queryParams("cel");
+            String sexo = request.queryParams("sexo");
             String fecha = request.queryParams("birthday");
             String email = request.queryParams("email");
+            String nacionalidad = request.queryParams("pais");
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(fecha);
 
             participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
-            System.out.println(nombres + "  " + apellidos + " " + fecha + "  " + cedula + "  " + sexo + "  " + telcel + "  " + telRes);
-            if (participanteModel.insert(new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes, 0))) {
+            System.out.println(nombres + "  " + apellidos + " " + fecha + "  " + cedula + "  " + sexo + "  " + telcel + "  " + telRes+" "+ nacionalidad+""+ sexo + ""+ date +""+email);
+            if (participanteModel.insert(new Participante(nombres, apellidos, date, sexo.charAt(0), null, cedula, email, telcel, telRes, 0, nacionalidad))) {
                 model.put("name", " El participante:  " + nombres);
                 return new ModelAndView(model, "templates/registrarParticipantes.html");
             }else {
@@ -228,6 +229,7 @@ public class Controller {
             model.put("nombres", "Nombre(s)");
             model.put("apellidos","Apellido(s)");
             model.put("email", "Email");
+            model.put("nacionalidad", "Nacionalidad");
             model.put("tel", "Celular");
             model.put("balance", "Balance");
             participanteModel = new ParticipanteModel<>(5432, "1234", "Acreser", "postgres");
