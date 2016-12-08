@@ -129,7 +129,7 @@
                 <div class="input-group-addon">
                     <i class="material-icons md-18 blue">account_box</i>
                 </div>
-                <input name="nombre" type="text" class="form-control" required/>
+                <input name="nombre" type="text" class="form-control" required="required" placeholder="Nombre(s)"/>
             </div>
         </div>
 
@@ -160,7 +160,7 @@
                     <i class="material-icons md-18 blue">label</i>
                 </div>
                 <select id="selectorTaller" name="tipo" class="form-control" required>
-                    <option value="" selected disabled>Nothing Selected</option>
+                    <option value="" selected disabled>Seleccione una opción</option>
                     #foreach ($taller in $talleres)
                     <option value="$taller.getCodigo()">$taller.getNombre()</option>
                     #end
@@ -175,7 +175,7 @@
                     <i class="material-icons md-18 blue">account_circle</i>
                 </div>
                 <select name="entrenador" class="form-control" required>
-                    <option value="" selected disabled>Nothing Selected</option>
+                    <option value="" selected disabled>Seleccione una opción</option>
                     #foreach ($entrenador in $entrenadores)
                     <option>$entrenador.getMatricula(): $entrenador.getNombre()
                         $entrenador.getApellidos()
@@ -189,9 +189,10 @@
             <label>Cupo:</label>
             <div class="input-group">
                 <div class="input-group-addon">
-                    <i class="material-icons">format_list_numbered</i>
+                    <i class="material-icons md-18 blue">format_list_numbered</i>
                 </div>
-                <input name="cupo" type="number" class="form-control" required/>
+                <input name="cupo" type="number" class="form-control" required
+                       placeholder="Cant. maxima de participantes"/>
             </div>
         </div>
 
@@ -199,9 +200,9 @@
             <label>Costo:</label>
             <div class="input-group">
                 <div class="input-group-addon">
-                    <i class="material-icons">attach_money</i>
+                    <i class="material-icons md-18 blue">attach_money</i>
                 </div>
-                <input name="costo" type="number" class="form-control" required/>
+                <input name="costo" type="number" class="form-control" required placeholder="Costo"/>
             </div>
         </div>
 
@@ -212,8 +213,7 @@
                 <div class="input-group-addon">
                     <i class="material-icons md-18 blue">date_range</i>
                 </div>
-                <input type="date" id="fecha1" name="fecha1" size="20"
-                       class="form-control"/>
+                <input type="date" id="fecha1" name="fecha1" size="20" class="form-control"/>
             </div>
         </div>
 
